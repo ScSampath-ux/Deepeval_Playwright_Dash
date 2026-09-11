@@ -1,0 +1,1091 @@
+
+### 1. Unable to Select the Saturday Delivery Option
+**Problem**
+The Saturday Delivery option cannot be selected while processing a shipment.
+
+**Cause**
+The Saturday Delivery option is available only when the Saturday Delivery feature is enabled in the Admin Profile Options, and a FedEx service that supports Saturday Delivery is selected.
+
+**Solution**
+1. Enable Saturday Delivery in Admin Profile Options.
+2. Select a FedEx service that supports Saturday Delivery.
+3. Retry the shipment.
+
+**Expected Result**
+Once the feature is enabled and a supported FedEx service is selected, the Saturday Delivery option becomes available for selection.
+
+**Keywords**
+Saturday Delivery, Saturday Shipment, FedEx, Admin Profile Options, Shipping Page
+
+**Additional Notes**
+Module: Shipping
+Category: Configuration
+Customer Query:
+• Unable to select Saturday Delivery.
+• Saturday Delivery option is disabled.
+• Cannot enable Saturday Shipment.
+• Saturday Delivery checkbox is unavailable.
+When to Contact Support:
+• Saturday Delivery is enabled.
+• A supported FedEx service is selected.
+• The option is still unavailable.
+
+---
+
+### 2. Freight Shopping Fails Due to Special Characters in Item Description
+**Problem**
+Freight Shopping fails and displays the message: “Unable to contact Freight Shop Server. The Server may be Offline. Please try again later.”
+
+**Cause**
+This error can occur when an item description contains unsupported special characters, such as “&”.
+
+**Solution**
+1. Review the item description.
+2. Remove unsupported special characters (for example, “&”).
+3. Save the changes.
+4. Retry Freight Shopping.
+
+**Expected Result**
+After removing the special character and retrying, Freight Shopping should process successfully.
+
+**Keywords**
+Freight Shopping, Freight Shop Server, Server Offline, Item Description, Special Characters, Ampersand, “&”
+
+**Additional Notes**
+Module: Freight Shopping
+Category: Data Validation
+Customer Query:
+• Unable to contact Freight Shop Server.
+• Freight Shopping failed.
+• Freight Shop Server is offline.
+• Freight Shopping error while processing shipment.
+• Unable to get Freight Shopping rates.
+When to Contact Support:
+• The item description does not contain special characters.
+• Freight Shopping still fails after updating the description.
+
+---
+
+### 3. DHL Shipment Fails Due to Missing or Invalid Phone Number
+**Problem**
+The shipment cannot be processed, and ShipConsole displays a phone number validation error (111 Error in parsing request XML – Value “” is not facet-valid with respect to pattern … for type ‘PhoneNumber’).
+
+**Cause**
+This error usually occurs when the Ship To or Shipper phone number is missing or does not meet DHL’s required format.
+
+**Solution**
+1. Verify that the Ship To phone number is entered correctly.
+2. Verify that the Shipper (Branch Plant) phone number is configured.
+3. Save the changes.
+4. Retry the shipment.
+
+**Expected Result**
+After entering a valid phone number and retrying, the shipment should process without the validation error.
+
+**Keywords**
+DHL, Phone Number, XML Parsing Error, Invalid Phone Number, Shipping Error
+
+**Additional Notes**
+Module: Shipping
+Category: Data Validation
+Customer Query:
+• DHL shipment failed.
+• Error in parsing request XML.
+• Invalid Phone Number.
+• Unable to ship with DHL.
+• XML parsing error during shipment.
+• Phone number validation error.
+When to Contact Support:
+• Valid phone numbers are configured.
+• The shipment still fails with the same error.
+
+---
+
+### 4. Can I Set the Cursor Focus to the Search Field After Shipping?
+**Problem**
+After completing Ship or Ship Confirm, the cursor automatically moves to the Weight field instead of the Delivery Search field.
+
+**Cause**
+ShipConsole currently supports setting the default cursor focus only to the Weight or Dimensions fields after shipping; setting the cursor focus to the Delivery Search field is not supported at this time.
+
+**Solution**
+No action is required. If this functionality is important for your operations, you may submit a feature request through ShipConsole Support.
+
+**Expected Result**
+No change in behavior should be expected at this time. The suggestion has been added to the product roadmap, and the feature request has been accepted and added to the product development backlog.
+
+**Keywords**
+Cursor Focus, Search Field, Weight Field, Ship Confirm, Shipping Screen, Feature Request
+
+**Additional Notes**
+Module: Shipping
+Category: Data Validation
+Customer Query:
+• Cursor goes to Weight after shipping.
+• Focus should return to Search field.
+• Can ShipConsole automatically focus on the Delivery search box?
+• Wrong input focus after shipping.
+• Cursor position after Ship Confirm.
+
+---
+
+### 5. Lot & Serial Button Not Displayed in ShipConsole
+**Problem**
+The Lot & Serial button is not displayed in ShipConsole while processing a shipment.
+
+**Cause**
+The Lot & Serial button is displayed only when the shipment lines have been Pick Confirmed (Staged) in Oracle. If the delivery lines are still in Released to Warehouse status, the button will not appear.
+
+**Solution**
+1. Check the delivery line status in Oracle.
+2. Confirm the lines are Staged (Pick Confirmed).
+3. Retrieve the shipment again in ShipConsole.
+4. Verify that the Lot & Serial button is displayed.
+
+**Expected Result**
+After confirming the delivery is Staged in Oracle and retrieving the shipment again, the Lot & Serial button should be displayed.
+
+**Keywords**
+Lot & Serial, Pick Confirm, Staged, Released to Warehouse, Oracle, ShipConsole
+
+**Additional Notes**
+Module: Shipping
+Category: Data Validation
+Customer Query:
+• Lot & Serial button is missing.
+• Lot & Serial is not displayed.
+• Cannot assign Lot & Serial.
+• Lot & Serial option not available.
+• Lot & Serial button disappeared.
+When to Contact Support:
+• The delivery lines are already Staged in Oracle.
+• The Lot & Serial button is still not displayed after retrieving the shipment again.
+
+---
+
+### 6. Label Creation Failed – Phone Number Too Long
+**Problem**
+Label creation fails because the recipient phone number exceeds the maximum length allowed by the carrier.
+
+**Cause**
+The shipment could not be processed because the recipient (Ship To) phone number exceeds the maximum length allowed by the carrier.
+
+**Solution**
+1. Open the shipment.
+2. Verify the Ship To Phone Number.
+3. Ensure the phone number is within the length supported by the carrier (FedEx).
+4. Save the changes.
+5. Retry creating the shipping label.
+
+**Expected Result**
+After correcting the phone number length and retrying, the shipping label should be created successfully.
+
+**Keywords**
+FedEx, UPS, Phone Number, PHONENUMBER.TOO.LONG, Label Creation, Phone Validation
+
+**Additional Notes**
+Module: Shipping
+Category: Carrier
+Customer Query:
+• Error creating labels.
+• Phone number too long.
+• FedEx label creation failed.
+• Phone number validation error.
+When to Contact Support:
+• The phone number is within the allowed length.
+• The error still occurs after updating the phone number.
+
+---
+
+### 7. Destination Country Is Not Thermal Air Waybill Enabled (errorCode:2010) – International Shipment
+**Problem**
+The FedEx international shipment cannot be processed due to error code 2010.
+
+**Cause**
+This is a FedEx carrier error indicating that the selected destination or service is not supported for Thermal Air Waybill processing.
+
+**Solution**
+1. Verify that the selected FedEx service is available for the destination country.
+2. If the issue persists with multiple FedEx services, contact your FedEx Account Representative to confirm whether the destination country is supported and whether your account is authorized to ship to that destination.
+3. If FedEx confirms the destination is restricted, use an alternative shipping option or carrier.
+
+**Expected Result**
+After confirming FedEx service eligibility (or switching to an alternative shipping option or carrier if restricted), the shipment should process successfully.
+
+**Keywords**
+errorCode 2010, Destination country is not Thermal Air Waybill enabled, FedEx error 2010, Thermal Air Waybill, Myanmar shipping, FedEx destination restriction, FedEx International, Carrier restriction, Destination not supported
+
+**Additional Notes**
+Module: Shipping
+Category: Carrier
+Customer Query:
+While processing a FedEx international shipment, ShipConsole displays the error “Destination country is not Thermal Air Waybill enabled (errorCode:2010)” and the shipment cannot be processed.
+When to Contact Support:
+Contact ShipConsole Support if the destination is supported and the account number is valid but the shipment is still unable to process.
+
+---
+
+### 8. Destination Country Is Not Thermal Air WayBill Enabled (errorCode:2010) – FedEx Service Selection
+**Problem**
+The FedEx shipment cannot be processed due to error code 2010.
+
+**Cause**
+This FedEx carrier error indicates that the selected FedEx service is not supported for the shipment destination.
+
+**Solution**
+1. Verify that the selected FedEx service is valid for the origin and destination.
+2. Select another supported FedEx service (such as International Economy or International Priority) if available.
+3. If needed, verify the available services directly on the FedEx website or with your FedEx representative.
+
+**Expected Result**
+After selecting an alternative supported FedEx service, the shipment should process successfully.
+
+**Keywords**
+ErrorCode 2010, Thermal Air WayBill, Destination country not Thermal Air WayBill enabled, FedEx service not available, FedEx International Ground, FedEx International Economy, FedEx International Priority, Thermal AWB, Carrier service error
+
+**Additional Notes**
+Module: Shipping
+Category: Carrier
+Customer Query:
+While processing a FedEx shipment, ShipConsole displays “Destination country is not Thermal Air WayBill enabled (errorCode:2010)” and the shipment cannot be processed.
+When to Contact Support:
+Contact ShipConsole Support if the destination is supported and the account number is valid but the shipment is still unable to process.
+
+---
+
+### 9. USPS Label Appears to Be Missing Address Line 2
+**Problem**
+The USPS shipping label appears to be missing Address Line 2 (for example, apartment or suite number).
+
+**Cause**
+ShipConsole sends all available address lines received from the ERP to USPS. USPS determines the final label layout and may format address lines differently based on its own addressing standards.
+
+**Solution**
+1. Verify that Address Line 2 is populated correctly in the ERP or WMS.
+2. Create a new test shipment using the same address.
+3. Check whether Address Line 2 appears on the USPS shipping label.
+4. If the issue persists across multiple shipments, provide the tracking number and shipment details to ShipConsole Support.
+
+**Expected Result**
+A new test shipment should confirm whether Address Line 2 prints correctly; if the field is populated correctly in the ERP but still does not appear, this indicates a reproducible issue for ShipConsole Support to investigate.
+
+**Keywords**
+USPS, Ground Advantage, Address Line 2, Apartment, Suite, Unit, Missing Address, Label Formatting, USPS Label, Address Layout, Incomplete Address
+
+**Additional Notes**
+Module: Shipping
+Category: USPS Labels
+Customer Query:
+• USPS label is not printing Address Line 2.
+• USPS shipping label missing apartment number.
+• Address Line 2 is missing on USPS label.
+• USPS label has incomplete delivery address.
+• Suite or Apartment number is not printed.
+• USPS label shows only one address line.
+When to Contact Support:
+• Address Line 2 exists in the ERP but is not present in the ShipConsole request.
+• The issue is consistently reproducible.
+• Multiple shipments show the same behavior.
+
+---
+
+### 10. USPS Ground Advantage Label Not Printing Address Line 2
+**Problem**
+The USPS Ground Advantage label is not printing Address Line 2, resulting in an incomplete address.
+
+**Cause**
+ShipConsole sends all address lines received from the ERP to USPS. USPS determines the final label formatting, which may differ from the source address.
+
+**Solution**
+1. Verify that Address Line 2 is populated correctly in the ERP or WMS.
+2. Create a new shipment using the same address and generate a USPS label.
+3. Confirm whether Address Line 2 appears on the new label.
+4. If the issue persists, provide the tracking number and recent shipment details to ShipConsole Support for investigation.
+5. If new shipments print correctly, no further action is required.
+
+**Expected Result**
+A new test shipment should confirm whether Address Line 2 prints correctly on the USPS label going forward.
+
+**Keywords**
+USPS, USPS Ground Advantage, Address Line 2, Apartment Number, Suite Number, Missing Address, Incomplete Address, Label Printing, Carrier Label, USPS Formatting, ShipConsole API, Returned Package
+
+**Additional Notes**
+Module: Shipping
+Category: Carrier Label
+Customer Query:
+• USPS Ground Advantage label not printing Address Line 2.
+• USPS label missing Address Line 2.
+• Apartment or Suite number not printed on USPS label.
+• USPS shipping label has incomplete address.
+• USPS label missing second address line.
+• Packages returned due to incomplete address on USPS label.
+When to Contact Support:
+Contact ShipConsole Support if the issue is consistently reproducible across multiple shipments or if Address Line 2 is present in the ERP but missing on all USPS labels.
+
+---
+
+### 11. Error Code 9998 – Invalid FedExAdapterAPI Authentication Details Provided
+**Problem**
+The shipment fails with Error Code 9998: Invalid FedExAdapterAPI Authentication Details Provided.
+
+**Cause**
+This error indicates that the configured FedEx Adapter API authentication details are invalid or do not match the Production account.
+
+**Solution**
+1. Verify the configured FedEx Adapter API credentials.
+2. Ensure the username, password, and account details are correct.
+3. Save the updated configuration.
+4. Retry the shipment.
+5. If the error persists, validate the account details with ShipConsole Support.
+
+**Expected Result**
+After verifying and correcting the FedEx Adapter API credentials, the shipment should authenticate and process successfully.
+
+**Keywords**
+Error Code 9998, Invalid FedExAdapterAPI Authentication Details Provided, FedEx Adapter, Authentication Failed, FedEx API, Invalid Credentials, FedEx Configuration, Production Authentication
+
+**Additional Notes**
+Module: Configuration
+Category: FedEx API
+Customer Query:
+• Error Code 9998 Invalid FedExAdapterAPI Authentication details provided.
+• Invalid FedExAdapterAPI Authentication details provided.
+• FedExAdapterAPI authentication error.
+• Unable to authenticate FedEx adapter.
+• FedEx API authentication failed.
+• Error 9998 while shipping with FedEx.
+When to Contact Support:
+Contact ShipConsole Support if the error continues after verifying the FedEx Adapter API credentials or if assistance is required to validate the Production account setup.
+
+---
+
+### 12. Shipping Labels Not Generated Due to QZ Tray Printing Configuration
+**Problem**
+Shipments process successfully, but the shipping label is not generated or printed.
+
+**Cause**
+This typically occurs due to the QZ Tray printing configuration; when enabled, it may prevent labels from printing through the configured network printer.
+
+**Solution**
+1. Verify that the shipment has been processed successfully.
+2. Check whether the QZ Tray printing option is enabled.
+3. Disable the QZ Tray printing option if network printing is being used.
+4. Reprocess the shipment or click Print Label to reprint the label.
+5. Confirm that the label prints successfully through the configured printer.
+
+**Expected Result**
+After disabling the QZ Tray printing option (if network printing is used) and reprocessing or reprinting, the label should print successfully through the configured printer.
+
+**Keywords**
+Label Not Generated, Label Not Printing, Print Label, Shipping Label, QZ Tray, Network Printer, Label Printing, UPS, FedEx, DHL, USPS, Carrier Label, Printer Configuration
+
+**Additional Notes**
+Module: Shipping
+Category: Label Printing
+Customer Query:
+• Shipping label not generated.
+• Label not printing after shipment.
+• Unable to print shipping label.
+• Print Label not working.
+• Shipment processed but label not generated.
+• FedEx label not printing.
+• UPS label not printing.
+• DHL label not printing.
+• USPS label not printing.
+• Shipping label missing after processing.
+When to Contact Support:
+Contact ShipConsole Support if labels still do not print after verifying the printing configuration or if assistance is required with printer setup.
+
+---
+
+### 13. QZ Tray Not Connected
+**Problem**
+QZ Tray is not connected, preventing label printing.
+
+**Cause**
+This occurs when QZ Tray is not running or connected, an unsupported QZ Tray version is installed, or browser settings (Local Network Access Check) block the required local network access.
+
+**Solution**
+1. Verify that QZ Tray version 2.2.6 (or the supported version) is installed and running.
+2. If using Google Chrome: open chrome://flags/#local-network-access-check, disable Local Network Access Check, and relaunch the browser.
+3. If using Microsoft Edge: open edge://flags/#local-network-access-check, disable Local Network Access Check, and relaunch the browser.
+4. Clear the browser cache and cookies.
+5. Restart the browser and access ShipConsole again.
+6. Retry printing the label.
+7. If the browser settings are managed by your organization and cannot be changed, contact your IT administrator.
+
+**Expected Result**
+After confirming QZ Tray is running, disabling the browser’s Local Network Access Check, and clearing the cache/restarting the browser, QZ Tray should reconnect and label printing should resume.
+
+**Keywords**
+QZ Tray, QZ Tray Not Connected, QZ Tray Connection Error, Label Printing, Chrome, Edge, Local Network Access Check, Browser Settings, Print Labels, Network Policy, Printer Connection, QZ Tray Disconnected
+
+**Additional Notes**
+Module: Shipping
+Category: Label Printing
+Customer Query:
+• QZ Tray not connected.
+• QZ Tray connection error.
+• Unable to connect to QZ Tray.
+• QZ Tray is disconnected.
+• Cannot print labels using QZ Tray.
+• QZ Tray printing issue.
+• QZ Tray browser connection failed.
+When to Contact Support:
+Contact ShipConsole Support if QZ Tray remains disconnected after completing the above steps. If browser policies prevent changing the required settings, work with your IT administrator before contacting ShipConsole Support.
+
+---
+
+### 14. Unable to Export ShipConsole User List
+**Problem**
+There is no way to export the ShipConsole user list.
+
+**Cause**
+ShipConsole does not currently support exporting the user list; user information can only be viewed through the ShipConsole Admin responsibility.
+
+**Solution**
+1. Log in to ShipConsole with Admin responsibility.
+2. Navigate to the user management section to view configured users.
+3. Review user information directly within the application.
+4. If a complete user list is required, request it from ShipConsole Support.
+5. Currently, no report or export functionality is available for user information.
+
+**Expected Result**
+Users can be reviewed directly within the application via Admin responsibility; a full exported list is only available if requested from ShipConsole Support.
+
+**Keywords**
+ShipConsole User List, Export Users, User Report, Admin Users, User Management, ShipConsole Admin, View Users, User Information, User Access, User Export
+
+**Additional Notes**
+Module: Administration
+Category: User Management
+Customer Query:
+• How do I export the ShipConsole user list?
+• Can I download the list of ShipConsole users?
+• Export ShipConsole users.
+• Get all ShipConsole users.
+• Generate user report from ShipConsole.
+• Extract user list from ShipConsole Admin.
+When to Contact Support:
+Contact ShipConsole Support if you need a complete user list or require assistance accessing user information.
+
+---
+
+### 15. INVALID.INPUT.EXCEPTION – Invalid Field Value in the Enum Regulation
+**Problem**
+The FedEx Ground Hazmat shipment fails with INVALID.INPUT.EXCEPTION: Invalid field value in the enum regulation.
+
+**Cause**
+This occurs because FedEx REST requires the Hazmat regulation value DOT for Ground shipments, instead of CFR.
+
+**Solution**
+1. Verify that the shipment is a FedEx Ground Hazmat shipment.
+2. Check the Hazmat regulation value being passed from the ERP.
+3. Update the regulation value from CFR to DOT for FedEx Ground REST shipments.
+4. If the regulation value is sourced from Oracle, update the corresponding configuration or mapping.
+5. If using the latest ShipConsole version, verify that the ShipConsole fix for regulation mapping has been applied.
+6. Retry the shipment and confirm that it is processed successfully.
+
+**Expected Result**
+After updating the regulation value from CFR to DOT (and applying any related ShipConsole mapping fix), the shipment should process successfully.
+
+**Keywords**
+INVALID.INPUT.EXCEPTION, Invalid field value in the enum regulation, FedEx REST, FedEx Ground, Hazmat, DOT, CFR, Regulation Set, Dangerous Goods, Hazmat Regulation, Enum Error, FedEx API
+
+**Additional Notes**
+Module: Shipping
+Category: FedEx REST API
+Customer Query:
+• INVALID.INPUT.EXCEPTION Invalid field value in the enum regulation.
+• FedEx REST enum regulation error.
+• FedEx Hazmat shipment failed.
+• FedEx Ground Hazmat error.
+• Invalid regulation value.
+• FedEx REST regulation set error.
+When to Contact Support:
+Contact ShipConsole Support if the error continues after updating the regulation value to DOT or if assistance is required to verify the Hazmat regulation mapping.
+
+---
+
+### 16. Error: Invalid/Missing Refresh Token (UPS)
+**Problem**
+The shipment fails with the error: Invalid/Missing Refresh Token for UPS.
+
+**Cause**
+This indicates that the UPS refresh token has expired or is invalid.
+
+**Solution**
+1. Log in to ShipConsole with Administrator privileges.
+2. Navigate to Carrier Configuration.
+3. Select the UPS carrier configuration.
+4. Click the Information (i) icon next to the Account Number.
+5. In the UPS Account window, click Register for the required UPS account.
+6. Sign in to the UPS Developer Portal using the associated UPS username and password.
+7. After successful authentication, confirm that the message “Registered Successfully” is displayed.
+8. Retry processing the shipment.
+
+**Expected Result**
+After re-registering the UPS account through Carrier Configuration and confirming “Registered Successfully,” the shipment should process without the token error.
+
+**Keywords**
+Invalid Refresh Token, Missing Refresh Token, UPS OAuth, UPS Authentication, UPS Token Expired, Refresh Token, UPS API, Carrier Configuration, UPS Registration, Register UPS Account, Registered Successfully
+
+**Additional Notes**
+Module: Shipping
+Category: UPS Authentication
+Customer Query:
+• Invalid/Missing Refresh Token.
+• UPS refresh token expired.
+• UPS authentication failed.
+• UPS token expired.
+• UPS OAuth error.
+• Unable to ship with UPS.
+When to Contact Support:
+• The UPS registration fails.
+• The “Registered Successfully” message is not displayed.
+• The Invalid/Missing Refresh Token error continues after successful registration.
+
+---
+
+### 17. UPS Account Number Provided as the Payment Method Is Missing or Invalid
+**Problem**
+The shipment fails because the UPS account number provided as the payment method is missing or invalid.
+
+**Cause**
+This indicates that the UPS payment account number is missing, blank, or invalid in the shipment payment details.
+
+**Solution**
+1. Open the shipment and navigate to the payment or shipping details.
+2. Verify that a valid UPS account number is entered as the payment method.
+3. Correct the account number if it is missing, blank, or invalid.
+4. Save the changes and reprocess the shipment.
+5. If the account number is sourced from the ERP, verify that the correct value is being passed to ShipConsole.
+6. Retry the shipment.
+
+**Expected Result**
+After entering or correcting a valid UPS account number and reprocessing, the shipment should complete successfully.
+
+**Keywords**
+UPS Account Number, Payment Method, Missing UPS Account Number, Invalid UPS Account Number, UPS Payment Error, UPS Shipping Error, Payment Account, Carrier Configuration, UPS API, Shipment Payment
+
+**Additional Notes**
+Module: Shipping
+Category: UPS Configuration
+Customer Query:
+• UPS account number provided as the payment method is missing or invalid.
+• Invalid UPS account number.
+• UPS payment account is missing.
+• UPS shipment failed due to invalid account number.
+• UPS payment method error.
+• Missing UPS account number.
+When to Contact Support:
+Contact ShipConsole Support if the account number is valid but the error continues, or if assistance is required to verify the UPS account configuration.
+
+---
+
+### 18. INVALID.INPUT.EXCEPTION – Invalid Field Value in the Input (International Shipping)
+**Problem**
+The international shipment fails with INVALID.INPUT.EXCEPTION: Invalid field value in the input.
+
+**Cause**
+This typically occurs when mandatory international shipment details are incomplete, most commonly missing Duties & Taxes information or the Importer Contact Number.
+
+**Solution**
+1. Open the International Shipment page.
+2. Verify that Duties & Taxes information is populated.
+3. Verify that the Importer Contact Number is entered.
+4. Save the shipment details.
+5. Retry processing the shipment.
+6. If the error continues, provide the shipment number and error details to ShipConsole Support.
+
+**Expected Result**
+After populating Duties & Taxes and the Importer Contact Number and reprocessing, the shipment should be processed successfully.
+
+**Keywords**
+INVALID.INPUT.EXCEPTION, Invalid Field Value in the Input, Duties and Taxes, Importer Contact Number, International Shipment, Shipping Error, International Shipping, Shipment Validation
+
+**Additional Notes**
+Module: Shipping
+Category: International Shipping
+Customer Query:
+• INVALID.INPUT.EXCEPTION Invalid field value in the input.
+• Error in shipping INVALID.INPUT.EXCEPTION.
+• International shipment failed with invalid input.
+• Invalid field value in the input.
+• International shipment processing error.
+• Shipping failed due to invalid shipment data.
+When to Contact Support:
+Contact ShipConsole Support if the required international shipment details are populated but the INVALID.INPUT.EXCEPTION error continues.
+
+---
+
+### 19. International Shipment Page Is Blank
+**Problem**
+The International Shipment page displays blank and does not load shipment details.
+
+**Cause**
+This is typically caused by incomplete inventory organization or carrier configuration for the environment being used.
+
+**Solution**
+1. Verify that the inventory organization is fully configured in ShipConsole.
+2. Confirm that the required carrier configuration is complete for the organization.
+3. Ensure the shipment is being processed in the correct environment (Test or Production).
+4. Retry opening the International Shipment page.
+5. If the issue persists, provide the shipment number and environment details to ShipConsole Support.
+
+**Expected Result**
+After verifying and completing the inventory organization and carrier configuration, the International Shipment page should load and display correctly.
+
+**Keywords**
+International Shipment Page Blank, Blank International Screen, International Shipment, Carrier Configuration, Inventory Configuration, Environment Setup, Shipment Page Not Loading, Test Environment, ShipConsole Configuration
+
+**Additional Notes**
+Module: Shipping
+Category: Configuration
+Customer Query:
+• International Shipment page is blank.
+• Blank International Shipment screen.
+• International page not loading.
+• International shipment details not displayed.
+• International shipment screen is empty.
+• Unable to open International Shipment page.
+When to Contact Support:
+Contact ShipConsole Support if the International Shipment page remains blank after verifying the inventory and carrier configuration or if assistance is required to validate the environment setup.
+
+---
+
+### 20. Commercial Invoice Printing to Label Printer
+**Problem**
+The Commercial Invoice prints to the label printer instead of a dedicated document printer.
+
+**Cause**
+This occurs when a dedicated Commercial Invoice (CI) printer is not configured for the user; without one configured, the Commercial Invoice defaults to the label printer.
+
+**Solution**
+1. Log in to ShipConsole with Administrator privileges.
+2. Navigate to Users and open the required user account.
+3. Review the Commercial Invoice (CI) Printer assigned to the user.
+4. If a CI printer is configured, verify that it is the correct document printer.
+5. If no CI printer is configured, configure the appropriate document printer for Commercial Invoice printing.
+6. Save the changes and process a test shipment to verify that the Commercial Invoice prints to the designated printer.
+
+**Expected Result**
+After configuring the correct Commercial Invoice printer for the user and testing a shipment, the Commercial Invoice should print to the designated document printer instead of the label printer.
+
+**Keywords**
+Commercial Invoice, CI Printer, Commercial Invoice Printer, Label Printer, Default Printer, Document Printer, User Printer Configuration, FedEx Commercial Invoice, ShipConsole Printing, Commercial Invoice Printing
+
+**Additional Notes**
+Module: Shipping
+Category: Document Printing
+Customer Query:
+• Commercial Invoice printing to label printer.
+• Commercial Invoice prints with shipping label.
+• Invoice printing on label printer.
+• Disable Commercial Invoice printing.
+• FedEx Commercial Invoice printing to label printer.
+• Shipping documents printing to wrong printer.
+When to Contact Support:
+Contact ShipConsole Support if the Commercial Invoice continues to print to the label printer after assigning the correct Commercial Invoice printer.
+
+---
+
+### 21. International Shipment Displays USD Instead of Sales Order Currency
+**Problem**
+The International Shipment page displays USD instead of the actual Sales Order currency.
+
+**Cause**
+This occurs when the Sales Order currency is not correctly passed from the ERP to ShipConsole during shipment processing.
+
+**Solution**
+1. Verify the currency defined on the Sales Order in the ERP.
+2. Confirm that the correct currency is passed to ShipConsole during shipment processing.
+3. Retrieve the shipment again and verify the currency displayed on the International Shipment page.
+4. If the currency is still incorrect, validate the ERP integration or currency mapping.
+5. Retry processing the shipment after correcting the currency data.
+
+**Expected Result**
+After verifying the Sales Order currency in the ERP and correcting the currency mapping, retrieving the shipment should display the correct currency on the International Shipment page.
+
+**Keywords**
+Sales Order Currency, International Shipment Currency, USD, Currency Mismatch, Commercial Invoice Currency, International Shipping, ERP Currency Mapping, Oracle Integration, ShipConsole Currency
+
+**Additional Notes**
+Module: Shipping
+Category: International Shipping
+Customer Query:
+• International shipment showing USD instead of Sales Order currency.
+• Incorrect currency displayed on International Shipment page.
+• Sales Order currency not reflected in ShipConsole.
+• International shipment currency mismatch.
+• Shipment showing USD instead of local currency.
+• Wrong currency on Commercial Invoice.
+When to Contact Support:
+Contact ShipConsole Support if the Sales Order currency is correct in the ERP but the International Shipment page continues to display an incorrect currency.
+
+---
+
+### 22. Error While Dispatching – Shipconsole Integration with Oracle
+**Problem**
+When attempting to dispatch a shipment from Oracle, the process fails with the message: “Error while dispatching.”
+This occurs during the integration between Oracle and ShipConsole, when shipment data is sent from Oracle (via Oracle Integration Cloud – OIC) to ShipConsole’s ShipAPI for label generation and shipment confirmation. In this scenario, the shipment remains partially processed or hung in Oracle, and no shipping label is generated.
+
+**Cause**
+This error occurs when the data sent from Oracle to ShipConsole’s API contains invalid or missing values.
+In this specific case:
+• The field `packageSequence`, which should contain a numeric value (e.g., 1, 2, 3), had an empty or non-numeric value in the OIC request payload.
+• ShipConsole’s API validates all incoming fields and rejected the request as invalid, returning a HTTP 400 (Bad Request) error.
+• Because of this, the dispatch process in Oracle failed and the shipment remained in an incomplete state.
+
+Example from OIC log:
+`shipments[3].packageInfo[0].packageSequence: packageSequence should be numeric`
+
+**Solution**
+1. **Verify Shipment Data in Oracle**: Check the shipment and package details for the affected batch or delivery. Ensure that each package has a valid numeric `packageSequence`, and all mandatory fields such as weight, dimensions, and freight terms are properly entered.
+2. **Review OIC Logs**: Open the OIC integration instance for the failed dispatch call. Review the request payload sent to ShipConsole’s ShipAPI. Confirm whether any field (especially `packageSequence`) is blank, null, or non-numeric.
+3. **Correct Invalid Data**: Update the incorrect shipment or package details in Oracle. If the shipment is stuck in a partially processed or hung state, have your Oracle team reset the record via SQL update to clear the partial transaction.
+4. **Reprocess the Shipment**: Once data corrections are made, retry dispatch from Oracle. The shipment should process successfully and generate a shipping label from ShipConsole.
+5. **Prevent Future Occurrences**: Ensure the integration mapping between Oracle and OIC always passes numeric values for `packageSequence`. Validate data before invoking ShipConsole’s API to avoid dispatch failures.
+
+**Expected Result**
+The shipment processes successfully and generates a shipping label from ShipConsole after data corrections and clearing partial transactions in Oracle.
+
+**Keywords**
+Error while dispatching, 400 Bad Request, package Sequence should be numeric, invalid data, Ship API, dispatch failed, Oracle Integration Cloud, UPS, partial shipment, Shipconsole
+
+**Additional Notes**
+• Shipconsole APIs return a 400 Bad Request when mandatory fields are missing or invalid — this is expected behavior to maintain data integrity.
+• No configuration changes were required in Shipconsole for this issue.
+• The error was fully resolved once the invalid data was corrected in Oracle and the stuck shipment record was updated.
+
+---
+
+### 23. Batch Ship Confirm Not Working for a Single Delivery
+**Problem**
+When performing a Batch Ship Confirm in ShipConsole, one or more deliveries may not get ship confirmed in Oracle, even though other deliveries in the batch process successfully. In some cases, users may manually ship confirm the same delivery in Oracle later and it works fine.
+
+**Cause**
+This issue occurs when Oracle prevents updates to certain shipment attributes — specifically, the Confirmed Date attributes on the delivery record.
+During Batch Ship Confirm, ShipConsole sends a request to Oracle to update the confirmed date and status. If the “Confirmed Date” attributes are disabled for update in Oracle, the API call from ShipConsole fails with an Oracle error such as:
+`Error: You can't update these Confirmed Date attributes for the <delivery_number> shipment because they're disabled.`
+As a result:
+• The ShipConsole batch process marks the delivery as processed,
+• But Oracle rejects the update,
+• So the delivery remains unconfirmed in Oracle.
+This usually impacts only specific deliveries, depending on their setup or data conditions in Oracle.
+
+**Solution**
+1. **Verify in Oracle**: Check whether the affected delivery is already ship confirmed (manually or via another process). If not, review the delivery attributes in Oracle and ensure that the Confirmed Date fields are enabled for update.
+2. **Check for Attribute Restrictions**: In Oracle, navigate to the Delivery form or Shipping Transaction form. Review the Confirmed Date and Actual Departure Date attributes. If these are disabled (greyed out or locked), Oracle will not allow updates from any external system — including ShipConsole.
+3. **Reprocess the Delivery**: Once the Confirmed Date attributes are enabled, reattempt the Batch Ship Confirm for the same delivery. The delivery should now confirm successfully in Oracle.
+4. **If Urgent**: If the delivery needs immediate processing, you can manually ship confirm the specific delivery in Oracle as a temporary workaround. Then recheck your Oracle setup to prevent this from happening again.
+
+**Expected Result**
+The delivery confirms successfully in Oracle during Batch Ship Confirm once Confirmed Date attributes are enabled for update in Oracle.
+
+**Keywords**
+Batch Ship Confirm, single delivery failed, Confirmed Date disabled, Oracle update restriction, ShipConsole, delivery not confirmed, error while batch confirm, intermittent batch confirm issue
+
+**Additional Notes**
+• This issue is delivery-specific, not a general batch failure.
+• ShipConsole is functioning correctly — it sends the update, but Oracle rejects it due to configuration restrictions.
+• To avoid future occurrences: Ensure that Confirmed Date attributes are not locked or restricted for update; periodically verify delivery attribute settings in Oracle if batch confirmations intermittently fail.
+
+---
+
+### 24. LTL Carrier (e.g. FedEx Freight) Service Levels Missing – LTL Configuration
+**Problem**
+When attempting to create a shipment in ShipConsole, users noticed that LTL Carrier service levels (e.g. FedEx Freight Priority and FedEx Freight Economy) were missing from the list of available shipping options. Other LTL carriers such as UPS Freight and XPO continued to appear normally.
+
+**Cause**
+This issue occurred due to a new LTL carrier setup that was added. When this new configuration was created, it temporarily interfered with the existing LTL carrier setup, causing the service levels to disappear from the list of available carriers.
+In short:
+• The existing LTL configuration became inactive or overridden after the new carrier setup was saved.
+• This caused ShipConsole to not display the LTL service levels.
+
+**Solution**
+1. **Review Carrier Setup**: Navigate to Carrier Configuration in ShipConsole. Verify that the LTL carrier is active for the affected shipping location. Ensure that the carrier code and mode match the valid LTL Carrier setup.
+2. **Check Service Level Mapping**: Confirm that service levels are correctly mapped to the carrier in the configuration. If they are missing, re-add the service levels under the carrier setup.
+3. **Validate Location-Specific Setup**: If a new carrier was created for a different location, verify that it does not override or deactivate the existing setup for other locations.
+4. **Save and Refresh Carrier Configuration**: Once corrections are made, refresh the carrier configuration in ShipConsole. Check if service levels are now visible in the shipment creation screen.
+5. **Re-Test Shipment Creation**: Attempt to create a shipment using LTL Carrier. Both service level options should now appear under the carrier service list.
+
+**Expected Result**
+LTL service level options appear correctly in the carrier service dropdown during shipment creation.
+
+**Keywords**
+LTL Carrier missing, Service level not showing, LTL carriers, LTL Carrier setup, ShipConsole carrier configuration, FedEx LTL issue, carrier setup conflict, ShipConsole Freight
+
+---
+
+### 25. Ship To Company Name Not Populating in ShipConsole
+**Problem**
+When users attempt to process shipments for certain orders (specifically S4/Fastenal orders), the Ship To Company Name field does not automatically populate on the ShipConsole shipping screen. This causes users to manually enter the company name each time before proceeding with shipping.
+
+**Cause**
+The issue occurs because the Company Name value is not being passed from Oracle to ShipConsole during shipment creation.
+In detail:
+• For the affected orders, the Company Name field in the Oracle ERP data is blank or not mapped correctly.
+• If the Mailing Name field in ERP is populated, it maps to the Contact Name field in ShipConsole — not the Company Name.
+• The Company Name in ShipConsole is retrieved directly from the Oracle ERP Address Book table.
+• If overridden address details (such as Customer Name or Contact Name) exist in the Address Book table, they may overwrite or block the Company Name field from being passed correctly.
+As a result, the Company Name field remains empty on the shipping screen, even though the information appears in the Oracle ERP order header.
+
+**Solution**
+1. **Verify Company Name in Oracle**: Open the order in Oracle and check the Company Name under the shipping address details. Confirm that this value is entered correctly in the Address Book table.
+2. **Check for Overridden Address Details**: Ask your Oracle ERP team to verify whether any overridden values (like Customer Name or Contact Name) exist in the Address Book table for the affected orders. If found, update or remove the overridden entries so the correct Company Name can flow to ShipConsole.
+3. **Confirm Field Mapping**: The Mailing Name in Oracle ERP maps to Contact Name in ShipConsole. The Company Name comes from the Company field in Oracle ERP. Ensure this mapping is correctly maintained in your ERP integration setup.
+4. **Re-Test in ShipConsole**: After corrections in Oracle ERP, create a new shipment for an affected order. The Ship to Company Name should now populate automatically on the shipping screen.
+
+**Expected Result**
+The Ship To Company Name automatically populates on the ShipConsole shipping screen from Oracle ERP.
+
+**Keywords**
+Ship To Company Name, Address Book table, Oracle ERP mapping, Company Name blank, Mailing Name mapping, Contact Name, Customer Name override, ShipConsole shipping screen
+
+**Additional Notes**
+• UPS allows a maximum of 35 characters for the Company Name field. If the value exceeds 35 characters, it may also cause validation errors when generating labels. Shorten the company name to 35 characters or fewer before processing if necessary.
+• No configuration changes are required on the ShipConsole side once Oracle ERP data is corrected.
+
+---
+
+### 26. Unable to Print Packing Slips from ShipConsole
+**Problem**
+When processing a shipment from ShipConsole, the shipment completes successfully — but the packing slip does not print. This can happen while testing, after configuration changes, or when new integration roles or printers are added.
+• The shipment is processed successfully, but no packing slip is printed.
+• A permission-related or access error may appear in the ERP or ShipConsole logs.
+• The printer queue remains empty or displays a failed job.
+
+**Cause**
+• **NetSuite**: Missing “Documents and Files” Permission. The integration user role does not have permission to access or print packing slip documents.
+• **Oracle E-Business Suite (EBS)**: Missing Report Responsibility or Printer Setup. The user linked to ShipConsole doesn’t have access to the Packing Slip report or printer definition.
+• **JD Edwards (JDE)**: Missing UBE Job Access or Incorrect Printer Queue. The JDE user doesn’t have rights to run the packing slip batch job (UBE), or the printer queue setup is invalid.
+
+**Solution**
+**For NetSuite Users:**
+1. Go to Setup → Users/Roles → Manage Roles.
+2. Edit the ShipConsole Integration Role.
+3. Under Permissions → Lists, add: `Documents and Files` = Full Access.
+4. Save the role and log out/in again.
+5. Reprocess a shipment — the packing slip should now print successfully.
+*(Note: This permission is required for ShipConsole to retrieve and print PDF packing slips from NetSuite.)*
+
+**For Oracle E-Business Suite Users:**
+1. Log in to EBS and go to System Administrator → Security → Responsibility → Define.
+2. Check if the user linked to ShipConsole has access to the Packing Slip Report responsibility (usually `WSH_PACK_SLIP_REPORT`).
+3. Ensure that the printer name configured in ShipConsole matches a valid printer in EBS.
+4. Run the Packing Slip report manually from EBS to confirm it completes normally.
+5. Once verified, retry the shipment from ShipConsole.
+*(Tip: If the concurrent request fails inside EBS, resolve that issue first — ShipConsole only triggers the EBS report.)*
+
+**For JD Edwards (JDE) Users:**
+1. Verify that the UBE (Universal Batch Engine) job for the packing slip runs successfully inside JDE.
+2. Check the printer definition in the Printer Master (P98616) table — ensure it’s active and matches what’s configured in ShipConsole.
+3. Confirm that the JDE user linked to ShipConsole has permission to execute the packing slip UBE.
+4. Test by running the same UBE directly in JDE.
+5. Once the print succeeds in JDE, ShipConsole will be able to print automatically.
+
+**Expected Result**
+After permissions or printer configurations are corrected:
+• ShipConsole can access the packing slip document through ERP.
+• The packing slip prints successfully on the assigned printer.
+• No permission or access errors appear.
+
+**Keywords**
+Packing Slip Not Printing, NetSuite Documents and Files Permission, Oracle EBS Packing Slip Report, WSH_PACK_SLIP_REPORT, JDE UBE Packing Slip, P98616 Printer Master, Print Spooler, ShipConsole Packing Slip
+
+---
+
+### 27. Unable to Process International Shipment – Missing ITN or FTR Exemption Number
+**Problem**
+When trying to process an international shipment in ShipConsole, the system displays an error, and the shipment cannot be completed. This issue usually occurs when the customs value of the shipment exceeds $2,500 USD (per HTS Code).
+
+**Cause**
+For shipments exported from the United States with a customs value over $2,500, the U.S. Customs and Border Protection (CBP) require an AES (Automated Export System) filing. Each AES filing generates a unique ITN (Internal Transaction Number) that must be provided in ShipConsole. If your shipment is exempt from AES filing, you must instead enter an FTR Exemption Number. If both fields are left blank, the carrier (UPS/FedEx/DHL) cannot process the shipment and returns an error.
+
+**Solution**
+1. **Open International Shipping Details**: When creating or editing the shipment in ShipConsole, click the International Details or Customs Information pop-up.
+2. **Enter Required Information**:
+   • If AES filing is completed: Enter your ITN Number in the field labeled ITN Number (e.g. `AES X20250910456789`).
+   • If shipment is exempt from AES filing: Enter your FTR Exemption Number in the field labeled FTR Exemption Number (e.g. `NOEEI 30.36` or `30.37`).
+3. **Save and Retry**: Click Save on the International Details screen, then re-process the shipment.
+
+**Expected Result**
+The shipment completes successfully and shipping labels print as expected.
+
+**Keywords**
+international shipment error, AES filing, ITN number, FTR exemption, customs value above 2500, export shipment, ShipConsole international shipping, missing ITN number, carrier error during export, UPS international shipment error, FedEx international error
+
+**Additional Notes**
+• AES filing is required for most U.S. exports valued > $2,500.
+• You can obtain the ITN Number from your company’s export compliance or AES filing team.
+• If unsure which number applies, check with your logistics or export department before shipping.
+
+---
+
+### 28. Understanding the “Check if LPN” Function in ShipConsole
+**Problem**
+Users may want to control when to use the “Check if LPN” option during shipment processing — for example, enabling it only for certain users or automatically keeping it checked for all eCommerce orders.
+
+**Cause**
+The “Check if LPN” option in ShipConsole is designed to help retrieve shipments by License Plate Number (LPN) instead of by delivery. Currently, this setting is available only at the Inventory Organization level.
+This means:
+• The option cannot be enabled or disabled for individual users.
+• It applies to all users who belong to the same Inventory Organization.
+
+**Solution**
+1. **For users who ship by LPN**: Select the checkbox “Check if LPN” the first time after logging in. The option will stay active for the entire session. You do not need to select it again for each shipment. When you log out and log back in, you’ll need to select it again.
+2. **For users who ship by Delivery**: Leave the “Check if LPN” box unchecked. Retrieve and process shipments as usual — no change to your workflow.
+3. **Customization (Optional)**: If your business requires enabling/disabling this feature per user, this can be logged as a Product Enhancement Request with the ShipConsole Product Team for future consideration.
+
+**Expected Result**
+• Users shipping by LPN can process shipments without repeatedly selecting the checkbox within a session.
+• Users shipping by Delivery can continue with the standard process.
+• The setting remains consistent within a session for each user.
+
+**Keywords**
+Check if LPN, License Plate Number, Inventory Organization, Session persistence, LPN shipping, Delivery retrieval, ShipConsole LPN
+
+---
+
+### 29. Freight Payment Method (Prepaid/Collect) Appearing Incorrectly in ShipConsole
+**Problem**
+When creating a shipment, ShipConsole shows the wrong freight payment type (e.g., Prepaid instead of Collect), even though the sales order appears correct in the ERP.
+
+**Cause**
+ShipConsole retrieves freight terms from the shipment-level or detail-level records (such as delivery lines, fulfillment, or sales order detail), not from the header directly. If the freight term or payment method was changed in the ERP after the order or fulfillment was created, that updated value may not flow automatically to the records used by ShipConsole.
+
+**Solution**
+• **For JD Edwards (JDE)**: Use Header → Detail → Populate to sync the Freight Handling Code between header and detail lines.
+• **For Oracle E-Business Suite (EBS)**: Verify the Freight Terms on each order line in Order Management and update any lines not matching the header.
+• **For Oracle Fusion Cloud SCM**: Check the Delivery Details or Fulfillment Lines and update the Freight Terms to match the sales order header.
+• **For NetSuite**: Go to Item Fulfillment record, edit and update the Shipping Terms/Freight Payment field, save, and reprocess the shipment.
+
+**Expected Result**
+ShipConsole will display the correct Freight Payment Method as per your ERP’s line-level or fulfillment data.
+
+**Keywords**
+freight terms, prepaid collect, shipping payment method, freight handling code, item fulfillment, delivery line, order header mismatch, ShipConsole integration, JDE, EBS, Fusion Cloud SCM, NetSuite, header to detail populate, incorrect payment method
+
+---
+
+### 30. Missing Ship from Phone Number and Contact Name in Oracle Inventory Setup
+**Problem**
+When trying to ship an order, users may see an error or find that the Ship From Contact Name or Phone Number is missing. This usually happens for a specific warehouse or organization in Oracle Applications. Without this information, carriers like FedEx or UPS cannot complete the shipment, since the shipper’s contact details are required.
+
+**Cause**
+The Ship From details (Contact Name and Phone Number) were not entered or are incomplete in the Inventory Organization setup in Oracle. Each shipping location (organization) needs these details to be set up correctly.
+
+**Solution**
+1. Log in to Oracle E-Business Suite.
+2. Go to Inventory Responsibility (Main Menu → Inventory).
+3. Open Organization Setup (Setup → Organizations → Organizations).
+4. Enter Organization Name and click Find.
+5. Click the Inventory Information button.
+6. In the appropriate fields, fill in valid Contact Name and Phone Number.
+7. Save changes (Ctrl + S).
+8. Retry shipment processing in ShipConsole.
+
+**Expected Result**
+Once the Ship From Contact Name and Phone Number are set up in Oracle, ShipConsole and carrier integrations (FedEx, UPS, etc.) process shipments without missing shipper detail errors.
+
+**Keywords**
+missing ship from contact, missing phone number, shipping setup error, Oracle EBS shipping, ship from organization setup, inventory organization parameters, FedEx label error, UPS label error, ShipConsole integration
+
+---
+
+### 31. Error in Shipping – Invalid Customer Account Number (Error Code: 4711)
+**Problem**
+When trying to process a shipment in ShipConsole, the following message appears:
+“Error in shipping... Invalid customer account number. (errorCode: 4711)”
+This means the carrier account number (for UPS, FedEx, DHL, etc.) is incorrect or missing in the ShipConsole setup.
+
+**Cause**
+The carrier account number stored in Carrier Configuration within ShipConsole is either entered incorrectly or not updated for the selected Operating Unit or Organization. Because of this, the carrier rejects the shipment request.
+
+**Solution**
+1. Log in to Oracle E-Business Suite.
+2. Navigate to ShipConsole Admin → Carrier Configuration.
+3. Select the correct Operating Unit, Organization, and Carrier (e.g., UPS, FedEx, DHL).
+4. Click Go to retrieve the carrier details.
+5. In the Account No. field, enter the correct account number provided by your carrier.
+6. Click Save to update the configuration.
+7. Reprocess the shipment.
+
+**Expected Result**
+Once the correct account number is saved, shipments will process successfully without the “Invalid customer account number” error.
+
+**Keywords**
+Invalid customer account number, errorCode 4711, Carrier Configuration, Account No, Operating Unit, Organization, ShipConsole Admin, Carrier account error
+
+---
+
+### 32. Error in Shipping – UPS Token Expiry or Missing Service Level
+**Problem**
+When processing a UPS shipment in ShipConsole, users may see an error message like “Error in Shipping.”
+This issue usually occurs when:
+• The UPS tokens used for communication with UPS have expired, or
+• The service level is missing in the carrier configuration or ship method mapping.
+
+**Cause**
+1. **Expired UPS Tokens**: ShipConsole uses access tokens to communicate securely with UPS. The access token expires every 4 hours, and the refresh token expires every 60 days (1440 hours). If token renewal fails (for example, due to a temporary UPS API issue), shipments may fail with an “Error in Shipping.”
+2. **Missing Service Level Configuration**: If the UPS service level (like “Ground” or “Next Day Air”) is not mapped correctly in the carrier configuration or ship method mapping, ShipConsole cannot send the correct shipment request.
+
+**Solution**
+1. **Verify UPS Token Validity**: Ask your IT or ShipConsole admin to generate and load new UPS tokens by running the token update script provided by ShipConsole Support. Once tokens are loaded, retry processing the shipment.
+2. **Revalidate Carrier Configuration**: Go to Carrier Configuration in ShipConsole Admin. Select Operating Unit, Organization, and UPS Carrier. Click Go to retrieve details, then click Save to reapply settings. Open Ship Method Mapping, review the methods, and click Save again. Retry shipment.
+3. **Confirm Label Format**: If label prints as junk characters, your setup is using ZPL (thermal) label format. Use a Zebra ZPL printer for such labels. To print on plain paper, change the Label Format in Carrier Configuration to PDF, then reprocess and print using View Label.
+
+**Expected Result**
+Shipments process successfully without token or service level errors, and labels print correctly in the designated format.
+
+**Keywords**
+Error in Shipping, UPS Token Expiry, Missing Service Level, UPS Ground, Carrier Configuration, Ship Method Mapping, ZPL Label, PDF Label, Token Refresh, UPS API Error, Label Printing Issue
+
+**Additional Notes**
+• Access Token Validity: 4 hours.
+• Refresh Token Validity: 60 days (1440 hours).
+• ShipConsole automatically refreshes tokens, but if the UPS API is temporarily unavailable, manual token load may be needed.
+
+---
+
+### 33. UPS Shipping Error – “Impossible use TEST – EPD” or “Error in Shipping”
+**Problem**
+When attempting to process a UPS shipment in ShipConsole (especially in a Test or newly configured environment), users may see an error message such as “Impossible use TEST – EPD” or “Error in Shipping”. This prevents the shipment from processing successfully or returning the correct label.
+
+**Cause**
+1. **Ship From Address Too Long**: UPS only accepts up to 35 characters per line for address fields. If “Address Line 1” exceeds this limit, the carrier rejects the request.
+2. **Missing or Incorrect Ship Method Mapping**: The Mode of Transport (MOT) or Ship Method Code may not be mapped correctly in ShipConsole, preventing updating shipment details to your ERP (Oracle, JDE, NetSuite).
+3. **Mismatch Between Test and Production Configurations**: When branch plants or carriers are newly set up in a Test environment, they may not have identical configurations as Production.
+
+**Solution**
+1. **Verify Ship From Address**: Go to Carrier Configuration in ShipConsole Admin. Check Ship From Address Line 1. Ensure it does not exceed 35 characters. Save and retry.
+2. **Validate Carrier Configuration & Ship Method Mapping**: Navigate to Admin → Carrier Configuration, select Operating Unit / Organization / Carrier (UPS), click Go and Save. Open Ship Method Mapping, review all mappings, and click Save again. Retry shipment.
+3. **Align Test and Production Setup**: Confirm branch plant, carrier, and ship method mappings match Production configuration. Update missing configurations before retrying.
+
+**Expected Result**
+Shipment completes successfully with proper address validation and carrier mapping in both Test and Production environments.
+
+**Keywords**
+UPS error, Impossible use TEST EPD, Error in shipping, Address line exceeds 35 characters, Carrier configuration, Ship method mapping, Mode of transport, Branch plant, JDE, Oracle, NetSuite, Test environment, Shipping validation, Missing mapping, ShipConsole, UPS integration
+
+---
+
+### 34. UPS Labels Not Printing – Error “lp: Too Many Active Jobs”
+**Problem**
+When processing UPS shipments in ShipConsole, users may notice that the shipments complete successfully, but no labels are printed. Even though the shipments are transacted and confirmed with UPS, the label output does not reach the printer.
+
+**Cause**
+This issue usually occurs due to a printer queue overload on the operating system. The ShipConsole log may show an error like `lp: Too many active jobs`. The operating system’s print spooler (not ShipConsole) manages these jobs. If the spooler has too many active or pending jobs, it blocks new print requests.
+
+**Solution**
+1. **Check Printer Queue on Server**: Ask your IT Operations or System Administrator to check the print queue/spooler for the affected printer (e.g. `FAB_UPS_SC_Z`, `HOUSHIP_FEDEX_SC`, `KDS_UPS_SC_2_Z`). Look for stuck or pending jobs and clear the queue.
+2. **Restart Print Spooler Service**: Restart the print spooler service on the server where the printer is installed.
+3. **Test Printing from ShipConsole**: Go to ShipConsole → Shipments, retrieve a shipment, click View Label or Print Label, and verify printing.
+
+**Expected Result**
+Print spooler queue clears, allowing ShipConsole print commands to reach the thermal printer successfully.
+
+**Keywords**
+UPS label not printing, lp too many active jobs, print spooler error, ShipConsole printer issue, label not generated, UPS shipment success no label, FAB_UPS_SC_Z, KDS_UPS_SC, OS print queue, UPS carrier configuration, printing failure
+

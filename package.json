@@ -1,0 +1,17 @@
+{
+  "name": "deepeval-agent-demo-e2e",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "test:e2e": "python evals/synthesize_dataset.py && npx playwright test && python evals/test_agent_synthesized.py",
+    "test:p2e": "npx playwright test && python evals/test_agent_synthesized.py",
+    "test:e2p": "python evals/synthesize_dataset.py && npx playwright test",
+    "dashboard": "python dashboard/server.py"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "dotenv": "^17.4.2"
+  }
+}

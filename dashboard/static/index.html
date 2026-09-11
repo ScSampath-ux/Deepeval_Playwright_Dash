@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShipConsole AI Evaluation Command Center</title>
+<link rel="stylesheet" href="/styles.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/ansi_up@6.0.2/ansi_up.min.js"></script>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-icon">&#128674;</span>
+      <span class="brand-text">ShipConsole AI</span>
+    </div>
+    <nav class="nav" id="mainNav">
+      <a href="#/overview" data-route="/overview"><span class="nav-icon">&#128202;</span>Overview</a>
+      <a href="#/evaluations" data-route="/evaluations"><span class="nav-icon">&#127939;</span>Evaluations</a>
+      <a href="#/test-cases" data-route="/test-cases"><span class="nav-icon">&#129514;</span>Test Cases</a>
+      <a href="#/metrics" data-route="/metrics"><span class="nav-icon">&#128200;</span>Metrics</a>
+      <a href="#/history" data-route="/history"><span class="nav-icon">&#128201;</span>History</a>
+      <a href="#/pipeline" data-route="/pipeline"><span class="nav-icon">&#9889;</span>Pipeline</a>
+      <a href="#/reports" data-route="/reports"><span class="nav-icon">&#128193;</span>Reports</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div id="scopeIndicator" class="scope-indicator" style="display:none;">
+        <div class="scope-label">Scoped Run</div>
+        <div class="scope-value" id="scopeValue">—</div>
+        <button id="clearScopeBtn" class="scope-clear">View Latest</button>
+      </div>
+    </div>
+  </aside>
+  <main class="content" id="content">
+    <div class="loading-placeholder">Loading Evaluation Command Center…</div>
+  </main>
+</div>
+<script src="/app.js"></script>
+</body>
+</html>
