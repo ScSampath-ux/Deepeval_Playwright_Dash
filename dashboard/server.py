@@ -226,7 +226,7 @@ def api_download_report(name):
 PIPELINE_COMMANDS = {
     "eval": {
         "label": "Run Evaluation",
-        "cmd": [sys.executable, os.path.join(ROOT, "evals", "test_agent_synthesized.py")],
+        "cmd": [sys.executable, "-u", os.path.join(ROOT, "evals", "test_agent_synthesized.py")],
         "shell": False,
     },
     "playwright": {
@@ -248,7 +248,12 @@ JOBS_LOCK = threading.Lock()
 def _run_job(job_id, cmd, shell):
     entry = JOBS[job_id]
     env = os.environ.copy()
+    dotenv_path = os.path.join(ROOT, ".env")
+    if os.path.exists(dotenv_path):
+        from dotenv import dotenv_values
+        env.update(dotenv_values(dotenv_path))
     env["PYTHONIOENCODING"] = "utf-8"
+    env["PYTHONUNBUFFERED"] = "1"
     try:
         proc = subprocess.Popen(
             cmd, cwd=ROOT, shell=shell, env=env,
@@ -260,10 +265,12 @@ def _run_job(job_id, cmd, shell):
             entry["queue"].put(line.rstrip("\n"))
         proc.wait()
         entry["returncode"] = proc.returncode
-        entry["status"] = "done" if proc.returncode == 0 else "failed"
+        if entry["status"] != "stopped":
+            entry["status"] = "done" if proc.returncode == 0 else "failed"
     except Exception as e:
-        entry["queue"].put(f"[Dashboard] Failed to launch pipeline: {e}")
-        entry["status"] = "error"
+        if entry["status"] != "stopped":
+            entry["queue"].put(f"[Dashboard] Failed to launch pipeline: {e}")
+            entry["status"] = "error"
     finally:
         entry["queue"].put(None)
 
@@ -291,6 +298,37 @@ def api_pipeline_run():
     thread = threading.Thread(target=_run_job, args=(job_id, spec["cmd"], spec["shell"]), daemon=True)
     thread.start()
     return jsonify({"job_id": job_id, "mode": mode, "label": spec["label"]})
+
+
+@app.route("/api/pipeline/stop", methods=["POST"])
+def api_pipeline_stop():
+    body = request.get_json(silent=True) or {}
+    job_id = body.get("job_id")
+    with JOBS_LOCK:
+        entry = JOBS.get(job_id) if job_id else None
+        if not entry:
+            running_jobs = [j for j in JOBS.values() if j.get("status") == "running"]
+            entry = running_jobs[0] if running_jobs else None
+
+        if not entry or entry.get("status") != "running":
+            return jsonify({"message": "No active pipeline job to stop"}), 200
+
+        entry["status"] = "stopped"
+        proc = entry.get("process")
+        if proc and proc.poll() is None:
+            try:
+                if sys.platform == "win32":
+                    subprocess.run(["taskkill", "/F", "/T", "/PID", str(proc.pid)],
+                                   capture_output=True, text=True)
+                else:
+                    proc.kill()
+            except Exception as e:
+                print(f"[Dashboard] Error terminating process {proc.pid}: {e}")
+
+        entry["queue"].put("\n[Dashboard] 🛑 Pipeline execution stopped by user.")
+        entry["queue"].put(None)
+
+    return jsonify({"success": True, "message": "Pipeline stopped successfully"})
 
 
 @app.route("/api/pipeline/status/<job_id>")

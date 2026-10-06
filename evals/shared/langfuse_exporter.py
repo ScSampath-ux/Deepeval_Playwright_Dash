@@ -54,7 +54,7 @@ def export_results_to_langfuse(test_cases: List[Any], run_data: Optional[Dict[st
                 output=actual_out,
                 metadata={
                     "expected_output": expected_out,
-                    "target_url": "http://scdocker.shipconsole.com:9001/parcel-shipping"
+                    "target_url": "https://sandbox.shipconsole.com/ShipConsole/login"
                 }
             )
 

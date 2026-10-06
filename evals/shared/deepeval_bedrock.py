@@ -19,6 +19,31 @@ BOTO3_CONFIG = Config(
 )
 
 
+import sys
+
+# Ensure UTF-8 console output encoding on Windows
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+if hasattr(sys.stderr, "reconfigure"):
+    try:
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
+
+def _safe_print(msg: str):
+    try:
+        print(msg)
+    except Exception:
+        try:
+            print(msg.encode("ascii", errors="backslashreplace").decode("ascii"))
+        except Exception:
+            pass
+
+
 def _clean_json_response(text: str) -> str:
     """
     Extracts valid JSON array or object substring from model output to ensure parsing robustness.
@@ -51,7 +76,7 @@ class BedrockLLM(DeepEvalBaseLLM):
     """
 
     def __init__(self, model_name: str = None, region_name: str = None):
-        self.model_name = model_name or os.environ.get("BEDROCK_MODEL_ID", "global.anthropic.claude-sonnet-4-5-20250929-v1:0")
+        self.model_name = model_name or os.environ.get("BEDROCK_MODEL_ID", "global.anthropic.claude-haiku-4-5-20251001-v1:0")
         self.region_name = region_name or os.environ.get("AWS_REGION", "us-west-2")
         self.model = ChatBedrockConverse(
             model_id=self.model_name,
@@ -71,14 +96,14 @@ class BedrockLLM(DeepEvalBaseLLM):
         try:
             content = self.model.invoke(prompt, *args, **kwargs).content
             cleaned = _clean_json_response(content)
-            print(f"\n--- [BedrockLLM Generate] ---")
-            print(f"Prompt preview: {prompt[:200]}...")
-            print(f"Response: {content}")
-            print(f"Cleaned: {cleaned}\n")
+            _safe_print(f"\n--- [BedrockLLM Generate] ---")
+            _safe_print(f"Prompt preview: {prompt[:200]}...")
+            _safe_print(f"Response: {content}")
+            _safe_print(f"Cleaned: {cleaned}\n")
             return cleaned
         except Exception as e:
-            print(f"\n[BedrockLLM Error] Failed to generate response: {e}")
-            print(f"[BedrockLLM Prompt] {prompt[:500]}...")
+            _safe_print(f"\n[BedrockLLM Error] Failed to generate response: {e}")
+            _safe_print(f"[BedrockLLM Prompt] {prompt[:500]}...")
             raise e
 
     async def a_generate(self, prompt: str, *args, **kwargs) -> str:
@@ -88,14 +113,14 @@ class BedrockLLM(DeepEvalBaseLLM):
             res = await self.model.ainvoke(prompt, *args, **kwargs)
             content = res.content
             cleaned = _clean_json_response(content)
-            print(f"\n--- [BedrockLLM Async Generate] ---")
-            print(f"Prompt preview: {prompt[:200]}...")
-            print(f"Response: {content}")
-            print(f"Cleaned: {cleaned}\n")
+            _safe_print(f"\n--- [BedrockLLM Async Generate] ---")
+            _safe_print(f"Prompt preview: {prompt[:200]}...")
+            _safe_print(f"Response: {content}")
+            _safe_print(f"Cleaned: {cleaned}\n")
             return cleaned
         except Exception as e:
-            print(f"\n[BedrockLLM Async Error] Failed to generate response: {e}")
-            print(f"[BedrockLLM Prompt] {prompt[:500]}...")
+            _safe_print(f"\n[BedrockLLM Async Error] Failed to generate response: {e}")
+            _safe_print(f"[BedrockLLM Prompt] {prompt[:500]}...")
             raise e
 
     def get_model_name(self) -> str:

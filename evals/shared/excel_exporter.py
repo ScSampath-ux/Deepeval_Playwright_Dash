@@ -83,13 +83,12 @@ def export_results_to_excel(latest_run_path: str, reports_dir: str):
 
         summary_data = [
             ("Execution Timestamp", datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "Timestamp of evaluation run"),
-            ("Target Portal URL", "http://scdocker.shipconsole.com:9001/parcel-shipping", "Live portal environment"),
+            ("Target Portal URL", "https://sandbox.shipconsole.com/ShipConsole/login", "Live portal environment"),
             ("Total Test Cases", total_cases, "Prompts processed"),
             ("Passed Test Cases", passed_cases, "Passed all 13 metrics"),
             ("Failed Test Cases", failed_cases_count, "Failed 1 or more metrics"),
             ("Overall Pass Rate (%)", f"{pass_rate:.1f}%", "Suite success rate"),
-            ("Metrics Evaluated", 13, "Safety, Relevancy, Guardrails, Business Rules"),
-            ("Cloud Observability", "Langfuse Cloud", "https://us.cloud.langfuse.com")
+            ("Metrics Evaluated", 13, "Safety, Relevancy, Guardrails, Business Rules")
         ]
 
         for r_idx, (k, v, desc) in enumerate(summary_data, 4):

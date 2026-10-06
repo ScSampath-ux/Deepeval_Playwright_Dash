@@ -23,10 +23,14 @@ if hasattr(sys.stdout, "reconfigure"):
 if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8")
 
+from dotenv import load_dotenv
+load_dotenv()
+
 # Disable DeepEval telemetry and Confident AI cloud upload globally before any deepeval imports run
 os.environ["DEEPEVAL_TELEMETRY_OPT_OUT"] = "YES"
 os.environ["DEEPEVAL_TELEMETRY"] = "no"
 os.environ["DEEPEVAL_CONFIDENT_AI_OPT_OUT"] = "YES"
+os.environ.pop("CONFIDENT_API_KEY", None)
 
 from deepeval import evaluate
 from deepeval.test_case import LLMTestCase

@@ -57,13 +57,13 @@ async function fetchJSON(url, opts) {
 }
 
 function destroyCharts() {
-  activeCharts.forEach((c) => { try { c.destroy(); } catch (e) {} });
+  activeCharts.forEach((c) => { try { c.destroy(); } catch (e) { } });
   activeCharts = [];
 }
 
 function closeStream() {
   if (activeEventSource) {
-    try { activeEventSource.close(); } catch (e) {}
+    try { activeEventSource.close(); } catch (e) { }
     activeEventSource = null;
   }
 }
@@ -179,7 +179,7 @@ async function renderOverview(content, params) {
     content.innerHTML = `
       <div class="page-header"><div><h1>Overview</h1><div class="page-subtitle">Evaluation Command Center</div></div></div>
       ${emptyState('No evaluation runs yet', 'Run the pipeline to generate your first persisted Evaluation Run.',
-        '<button class="btn btn-primary" onclick="navigate(\'/pipeline\')">Go to Pipeline</button>')}`;
+      '<button class="btn btn-primary" onclick="navigate(\'/pipeline\')">Go to Pipeline</button>')}`;
     return;
   }
 
@@ -248,8 +248,8 @@ async function renderOverview(content, params) {
       <div class="card">
         <div style="margin-bottom:10px;"><strong>Lowest scoring metrics (by pass rate):</strong></div>
         ${insights.lowest_metrics.length
-          ? insights.lowest_metrics.map((m) => `<div class="metric-line"><span class="metric-name">${escapeHtml(m.name)}</span><span class="metric-score" style="color:${statusColorForPct(m.pass_rate)}">${fmtPct(m.pass_rate)} pass &middot; avg ${m.avg_score.toFixed(2)}</span></div>`).join('')
-          : '<div class="text-muted">Every metric is passing 100% of cases in this run.</div>'}
+      ? insights.lowest_metrics.map((m) => `<div class="metric-line"><span class="metric-name">${escapeHtml(m.name)}</span><span class="metric-score" style="color:${statusColorForPct(m.pass_rate)}">${fmtPct(m.pass_rate)} pass &middot; avg ${m.avg_score.toFixed(2)}</span></div>`).join('')
+      : '<div class="text-muted">Every metric is passing 100% of cases in this run.</div>'}
       </div>
     </div>
 
@@ -309,14 +309,14 @@ function renderRecentFailed(el, run) {
   el.innerHTML = `<div class="table-wrap"><table>
     <thead><tr><th>Case ID</th><th>Input Prompt</th><th>Failed Metrics</th><th></th></tr></thead>
     <tbody>${failed.map((tc) => {
-      const failedCount = tc.metrics.filter((m) => !m.success).length;
-      return `<tr class="clickable" onclick="navigate('/test-cases', {case:'${tc.id}'})">
+    const failedCount = tc.metrics.filter((m) => !m.success).length;
+    return `<tr class="clickable" onclick="navigate('/test-cases', {case:'${tc.id}'})">
         <td class="cell-mono">${escapeHtml(tc.id)}</td>
         <td class="cell-truncate">${escapeHtml(tc.input)}</td>
         <td>${failedCount} / ${tc.metrics.length}</td>
         <td><span class="link-ext">Investigate &rarr;</span></td>
       </tr>`;
-    }).join('')}</tbody>
+  }).join('')}</tbody>
   </table></div>`;
 }
 
@@ -429,10 +429,10 @@ function renderTestCaseTable(el, cases) {
   el.innerHTML = `<div class="table-wrap"><table>
     <thead><tr><th>Case ID</th><th>Input Prompt Excerpt</th><th>Metrics Passed</th><th>Avg Score</th><th>Status</th><th></th></tr></thead>
     <tbody>${cases.map((tc) => {
-      const scored = tc.metrics.filter((m) => m.score !== null);
-      const avg = scored.length ? (scored.reduce((s, m) => s + m.score, 0) / scored.length) : 0;
-      const passedCount = tc.metrics.filter((m) => m.success).length;
-      return `<tr class="clickable" onclick="setParam('case','${tc.id}')">
+    const scored = tc.metrics.filter((m) => m.score !== null);
+    const avg = scored.length ? (scored.reduce((s, m) => s + m.score, 0) / scored.length) : 0;
+    const passedCount = tc.metrics.filter((m) => m.success).length;
+    return `<tr class="clickable" onclick="setParam('case','${tc.id}')">
         <td class="cell-mono">${escapeHtml(tc.id)}</td>
         <td class="cell-truncate">${escapeHtml(tc.input)}</td>
         <td>${passedCount} / ${tc.metrics.length}</td>
@@ -440,7 +440,7 @@ function renderTestCaseTable(el, cases) {
         <td><span class="badge ${tc.success ? 'badge-pass' : 'badge-fail'}">${tc.success ? 'Pass' : 'Fail'}</span></td>
         <td><span class="link-ext">Investigate &rarr;</span></td>
       </tr>`;
-    }).join('')}</tbody>
+  }).join('')}</tbody>
   </table></div>`;
 }
 
@@ -470,14 +470,13 @@ function renderTestCaseDetail(content, run, caseId) {
     <div class="section">
       <div class="section-title">
         ${tc.metrics.length}-Metric Results
-        ${tc.langfuse_trace_url ? `<a class="link-ext" href="${escapeHtml(tc.langfuse_trace_url)}" target="_blank" rel="noopener">\u{1F517} View Trace in Langfuse Cloud</a>` : '<span class="text-muted" style="font-weight:400;font-size:12px;">No Langfuse trace linked</span>'}
       </div>
       <div class="card" style="padding:0;overflow:hidden;">
         <div class="metric-detail-row header"><div>Metric</div><div>Score</div><div>Threshold</div><div>Gap</div><div>Result</div></div>
         ${tc.metrics.map((m, idx) => {
-          const gap = m.score !== null ? +(m.score - m.threshold).toFixed(2) : null;
-          const reasonId = `reason-${idx}`;
-          return `<div class="metric-detail-row">
+    const gap = m.score !== null ? +(m.score - m.threshold).toFixed(2) : null;
+    const reasonId = `reason-${idx}`;
+    return `<div class="metric-detail-row">
             <div>${escapeHtml(m.name)}</div>
             <div class="cell-mono">${m.score !== null ? m.score.toFixed(2) : '—'}</div>
             <div class="cell-mono">${m.threshold.toFixed(2)}</div>
@@ -487,7 +486,7 @@ function renderTestCaseDetail(content, run, caseId) {
             </div>
           </div>
           ${m.reason ? `<div class="reason-panel" id="${reasonId}" style="display:none;">${escapeHtml(m.reason)}</div>` : ''}`;
-        }).join('')}
+  }).join('')}
       </div>
     </div>
   `;
@@ -540,17 +539,17 @@ async function renderMetrics(content, params) {
   content.innerHTML = `
     <div class="page-header"><div><h1>Metrics</h1><div class="page-subtitle">Run ${escapeHtml(run.id)} &middot; ${run.metrics_summary.length} production metrics</div></div></div>
     ${Object.entries(grouped).filter(([, l]) => l.length).map(([key, list]) => {
-      const meta = CATEGORY_META[key];
-      return `<div class="section">
+    const meta = CATEGORY_META[key];
+    return `<div class="section">
         <div class="section-title">${meta.icon} ${escapeHtml(meta.label)}</div>
         <div class="table-wrap"><table>
           <thead><tr><th>Metric</th><th>Avg Score</th><th>Threshold</th><th>Passed</th><th>Failed</th><th>Pass Rate</th><th>Trend</th></tr></thead>
           <tbody>${list.map((m) => {
-            let trend = '<span class="trend-flat">→ n/a</span>';
-            if (regByName[m.name]) trend = `<span class="trend-down">↓ ${Math.abs(regByName[m.name].delta)} pts</span>`;
-            else if (impByName[m.name]) trend = `<span class="trend-up">↑ ${impByName[m.name].delta} pts</span>`;
-            else if (insights?.pass_rate_delta !== null) trend = '<span class="trend-flat">→ flat</span>';
-            return `<tr>
+      let trend = '<span class="trend-flat">→ n/a</span>';
+      if (regByName[m.name]) trend = `<span class="trend-down">↓ ${Math.abs(regByName[m.name].delta)} pts</span>`;
+      else if (impByName[m.name]) trend = `<span class="trend-up">↑ ${impByName[m.name].delta} pts</span>`;
+      else if (insights?.pass_rate_delta !== null) trend = '<span class="trend-flat">→ flat</span>';
+      return `<tr>
               <td>${escapeHtml(m.name)}</td>
               <td class="cell-mono">${m.avg_score.toFixed(2)}</td>
               <td class="cell-mono">${m.threshold.toFixed(2)}</td>
@@ -559,10 +558,10 @@ async function renderMetrics(content, params) {
               <td style="color:${statusColorForPct(m.pass_rate)}">${fmtPct(m.pass_rate)}</td>
               <td>${trend}</td>
             </tr>`;
-          }).join('')}</tbody>
+    }).join('')}</tbody>
         </table></div>
       </div>`;
-    }).join('')}
+  }).join('')}
   `;
 }
 
@@ -578,7 +577,7 @@ async function renderHistory(content, params) {
     content.innerHTML = `
       <div class="page-header"><div><h1>History</h1></div></div>
       ${emptyState('Not enough data yet', 'Run the pipeline at least once to start building run-over-run history.',
-        '<button class="btn btn-primary" onclick="navigate(\'/pipeline\')">Go to Pipeline</button>')}`;
+      '<button class="btn btn-primary" onclick="navigate(\'/pipeline\')">Go to Pipeline</button>')}`;
     return;
   }
 
@@ -668,13 +667,18 @@ function renderTrendChart(trend) {
 function renderRegressionMatrix(el, matrix) {
   if (!matrix.length) { el.innerHTML = '<div class="card text-muted">No metric history yet.</div>'; return; }
   const runIds = matrix[0].points.map((p) => p.run_id);
+  const fmtShortId = (id) => {
+    const m = id.match(/run_(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})/);
+    if (m) return `${m[2]}/${m[3]} ${m[4]}:${m[5]}`;
+    return id;
+  };
   el.innerHTML = `<div class="table-wrap"><table class="matrix-table">
-    <thead><tr><th class="sticky-col">Metric</th>${runIds.map((id) => `<th>${escapeHtml(id)}</th>`).join('')}</tr></thead>
+    <thead><tr><th class="sticky-col">Metric</th>${runIds.map((id) => `<th title="${escapeHtml(id)}">${escapeHtml(fmtShortId(id))}</th>`).join('')}</tr></thead>
     <tbody>${matrix.map((row) => `<tr>
       <td class="sticky-col">${escapeHtml(row.name)}</td>
       ${row.points.map((p) => p.pass_rate === null
-        ? '<td class="text-muted">—</td>'
-        : `<td style="color:${statusColorForPct(p.pass_rate)};font-family:var(--mono);">${p.pass_rate.toFixed(0)}%</td>`).join('')}
+    ? '<td class="text-muted">—</td>'
+    : `<td style="color:${statusColorForPct(p.pass_rate)};font-family:var(--mono);">${p.pass_rate.toFixed(0)}%</td>`).join('')}
     </tr>`).join('')}</tbody>
   </table></div>`;
 }
@@ -694,16 +698,16 @@ function renderComparison(el, a, b) {
     <div class="table-wrap"><table>
       <thead><tr><th>Metric</th><th>${escapeHtml(a.id)}</th><th>${escapeHtml(b.id)}</th><th>Delta</th></tr></thead>
       <tbody>${names.map((n) => {
-        const av = aMetrics[n] ? aMetrics[n].pass_rate : null;
-        const bv = bMetrics[n] ? bMetrics[n].pass_rate : null;
-        const delta = (av !== null && bv !== null) ? +(bv - av).toFixed(1) : null;
-        return `<tr>
+    const av = aMetrics[n] ? aMetrics[n].pass_rate : null;
+    const bv = bMetrics[n] ? bMetrics[n].pass_rate : null;
+    const delta = (av !== null && bv !== null) ? +(bv - av).toFixed(1) : null;
+    return `<tr>
           <td>${escapeHtml(n)}</td>
           <td class="cell-mono">${av !== null ? av.toFixed(0) + '%' : '—'}</td>
           <td class="cell-mono">${bv !== null ? bv.toFixed(0) + '%' : '—'}</td>
           <td class="${delta === null ? '' : (delta >= 0 ? 'gap-pos' : 'gap-neg')}">${delta === null ? '—' : (delta >= 0 ? '+' : '') + delta}</td>
         </tr>`;
-      }).join('')}</tbody>
+  }).join('')}</tbody>
     </table></div>
   `;
 }
@@ -719,6 +723,7 @@ async function renderPipeline(content) {
       <button class="btn btn-primary" id="btnEval">&#9654; Run Evaluation</button>
       <button class="btn btn-primary" id="btnFull">&#9889; Full Pipeline</button>
       <button class="btn btn-primary" id="btnPlaywright">&#9673; Playwright Only</button>
+      <button class="btn btn-danger" id="btnStop" style="display:none;">&#9632; Stop Execution</button>
     </div>
     <div class="pipeline-status-line" id="pipelineStatusLine" style="display:none;">
       <span class="dot" id="pipelineDot"></span><span id="pipelineStatusText"></span>
@@ -727,9 +732,26 @@ async function renderPipeline(content) {
   `;
 
   const btns = { eval: document.getElementById('btnEval'), full: document.getElementById('btnFull'), playwright: document.getElementById('btnPlaywright') };
+  const btnStop = document.getElementById('btnStop');
+  let activeJobId = null;
+
   document.getElementById('btnEval').addEventListener('click', () => startJob('eval'));
   document.getElementById('btnFull').addEventListener('click', () => startJob('full'));
   document.getElementById('btnPlaywright').addEventListener('click', () => startJob('playwright'));
+
+  btnStop.addEventListener('click', async () => {
+    btnStop.disabled = true;
+    btnStop.textContent = 'Stopping…';
+    try {
+      await fetchJSON('/api/pipeline/stop', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ job_id: activeJobId })
+      });
+    } catch (e) {
+      appendTerminalLine(document.getElementById('terminal'), `[Dashboard] Error stopping pipeline: ${e.message}`);
+    }
+  });
 
   function setButtonsDisabled(disabled) {
     Object.values(btns).forEach((b) => { b.disabled = disabled; });
@@ -752,7 +774,12 @@ async function renderPipeline(content) {
       return;
     }
 
+    activeJobId = res.job_id;
     setButtonsDisabled(true);
+    btnStop.style.display = 'inline-flex';
+    btnStop.disabled = false;
+    btnStop.innerHTML = '&#9632; Stop Execution';
+
     statusLine.style.display = 'flex';
     dot.className = 'dot running';
     statusText.textContent = `Running "${res.label}"…`;
@@ -772,12 +799,14 @@ async function renderPipeline(content) {
       statusText.innerHTML = `Job finished: <strong>${info.status}</strong> (exit code ${info.returncode})` +
         (info.status === 'done' ? ` &middot; <a class="link-ext" href="#" onclick="currentScope=null; navigate('/overview'); return false;">View Latest Run &rarr;</a>` : '');
       setButtonsDisabled(false);
+      btnStop.style.display = 'none';
       es.close();
     });
     es.onerror = () => {
       dot.className = 'dot error';
       statusText.textContent = 'Connection to pipeline log stream lost.';
       setButtonsDisabled(false);
+      btnStop.style.display = 'none';
       es.close();
     };
   }

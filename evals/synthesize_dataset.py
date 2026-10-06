@@ -15,6 +15,14 @@ import sys
 import json
 from typing import List, Dict, Any, Tuple, Set
 
+from dotenv import load_dotenv
+load_dotenv()
+
+os.environ["DEEPEVAL_TELEMETRY_OPT_OUT"] = "YES"
+os.environ["DEEPEVAL_TELEMETRY"] = "no"
+os.environ["DEEPEVAL_CONFIDENT_AI_OPT_OUT"] = "YES"
+os.environ.pop("CONFIDENT_API_KEY", None)
+
 _ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if _ROOT not in sys.path:
     sys.path.insert(0, _ROOT)
