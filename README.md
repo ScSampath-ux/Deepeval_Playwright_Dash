@@ -1,44 +1,69 @@
 # ShipConsole AI Chatbot Evaluation & E2E Testing Suite
 
-Automated Playwright UI testing and DeepEval multi-metric evaluation framework for the live ShipConsole AI Chatbot. Evaluates responses using AWS Bedrock and generates local reports (formatted Excel workbook, JSON/Markdown failure logs, and the local Command Center Dashboard). 100% offline & local reporting — no external cloud tracing (Confident AI / Langfuse) required.
+Automated Playwright UI testing and DeepEval multi-metric evaluation framework for the live ShipConsole AI Chatbot. Evaluates responses using AWS Bedrock and generates local reports (formatted Excel workbook, JSON/Markdown failure logs, and the local Command Center Dashboard).
+
+**100% offline & local reporting** — zero external cloud tracing (Confident AI / Langfuse) required.
 
 ---
 
-## ⚡ Environment Setup & Activation
+## 📋 Prerequisites
 
-### 1. Create and Activate Virtual Environment
+* **Node.js**: v18+ or v20+ LTS
+* **Python**: 3.10 to 3.12
+* **AWS Bedrock Access**: Model access enabled for Anthropic Claude models (e.g., Claude 3 / 3.5 Haiku)
+* **ShipConsole Network**: Access to ShipConsole portal (`https://qa.shipconsole.com`)
+
+---
+
+## ⚡ Setup & Installation
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/ScSampath-ux/Deepeval_Playwright_Dash.git
+cd Deepeval_Playwright_Dash
+```
+
+### 2. Install Node & Playwright Dependencies
+```bash
+npm install
+npx playwright install chromium
+```
+
+### 3. Create and Activate Virtual Environment
 
 **Windows PowerShell:**
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
 ```
 
 **Linux / macOS:**
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-```
-
-### 2. Install Dependencies
-```bash
-# Install Node.js dependencies (Playwright, dotenv)
-npm install
-npx playwright install chromium
-
-# Install Python evaluation & dashboard dependencies
 pip install -r requirements.txt
 ```
 
-### 3. Configure Environment Variables
-Copy `.env.example` to `.env` and fill in your portal login credentials and AWS Bedrock configuration:
-```bash
-cp .env.example .env
-```
+### 4. Configure Environment Variables
+Copy `.env.example` to `.env`:
+
+* **Windows:**
+  ```powershell
+  copy .env.example .env
+  ```
+* **Linux / macOS:**
+  ```bash
+  cp .env.example .env
+  ```
+
+Open `.env` and fill in:
+* `PORTAL_USERNAME` & `PORTAL_PASSWORD`: Your ShipConsole portal credentials.
+* `AWS_REGION` & `AWS_USER` (or `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY`): Your AWS Bedrock credentials.
 
 ---
 
-## 🚀 Quick Start & Execution Pipelines
+## 🚀 Execution Pipelines
 
 ### Run Full 3-Step E2E Pipeline
 ```powershell
@@ -89,3 +114,10 @@ Starts the local Command Center Dashboard to view past run history, metric analy
 | `npx playwright show-report` | Opens local HTML Playwright test execution report in browser |
 
 ---
+
+## 📊 Output Reports
+
+All evaluation outputs are strictly saved locally under the `reports/` directory:
+* **Executive Excel Workbook:** `reports/evaluation_results.xlsx` (multi-sheet workbook with KPI summary, pass/fail scores, and embedded charts)
+* **Failure Analysis Logs:** `reports/failed_evaluations.json` and `reports/failed_evaluations_report.md`
+* **Historical Run Records:** `reports/runs/run_<timestamp>.json` (browsable in the local Command Center dashboard at `http://127.0.0.1:5050`)
