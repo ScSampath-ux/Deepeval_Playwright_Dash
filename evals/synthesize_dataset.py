@@ -2,7 +2,7 @@
 ShipConsole AI Chatbot - Step 1: DeepEval Dataset Synthesizer
 
 This module automatically synthesizes new, unique test cases (input prompts and expected policy
-goldens) from evals/datasets/safety_policies.txt using AWS Bedrock.
+goldens) from evals/datasets/policies.txt using AWS Bedrock.
 
 Pipeline Position:
   - Step 1: DeepEval Synthesizer (this module)

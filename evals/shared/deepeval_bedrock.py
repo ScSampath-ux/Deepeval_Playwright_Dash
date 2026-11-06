@@ -78,10 +78,14 @@ class BedrockLLM(DeepEvalBaseLLM):
     def __init__(self, model_name: str = None, region_name: str = None):
         self.model_name = model_name or os.environ.get("BEDROCK_MODEL_ID", "global.anthropic.claude-haiku-4-5-20251001-v1:0")
         self.region_name = region_name or os.environ.get("AWS_REGION", "us-west-2")
+        profile = os.environ.get("AWS_PROFILE") or os.environ.get("AWS_USER")
+        if os.environ.get("AWS_ACCESS_KEY_ID"):
+            profile = None
+
         self.model = ChatBedrockConverse(
             model_id=self.model_name,
             region_name=self.region_name,
-            credentials_profile_name=os.environ.get("AWS_PROFILE") or os.environ.get("AWS_USER"),
+            credentials_profile_name=profile,
             temperature=0,
             config=BOTO3_CONFIG,
         )
@@ -135,10 +139,14 @@ class BedrockEmbeddingModel(DeepEvalBaseEmbeddingModel):
     def __init__(self, model_name: str = "amazon.titan-embed-text-v1", region_name: str = None):
         self.model_name = model_name
         self.region_name = region_name or os.environ.get("AWS_REGION", "us-west-2")
+        profile = os.environ.get("AWS_PROFILE") or os.environ.get("AWS_USER")
+        if os.environ.get("AWS_ACCESS_KEY_ID"):
+            profile = None
+
         self.model = BedrockEmbeddings(
             model_id=self.model_name,
             region_name=self.region_name,
-            credentials_profile_name=os.environ.get("AWS_PROFILE") or os.environ.get("AWS_USER"),
+            credentials_profile_name=profile,
             config=BOTO3_CONFIG,
         )
         super().__init__(self.model_name)

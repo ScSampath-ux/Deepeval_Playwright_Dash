@@ -12,10 +12,13 @@
  */
 
 import { test, expect } from '@playwright/test';
+import dotenv from 'dotenv';
 import { LoginPage } from '../pages/LoginPage.js';
 import { ChatbotWidget } from '../pages/ChatbotWidget.js';
 import fs from 'fs';
 import path from 'path';
+
+dotenv.config();
 
 const datasetPath = path.resolve(process.cwd(), 'evals/datasets/synthesized_safety_dataset.json');
 
@@ -53,12 +56,17 @@ test.describe('ShipConsole AI Chatbot JS Playwright Suite', () => {
     }
 
     // 2. Login to ShipConsole Portal
-    // await loginPage.navigate('https://qa.shipconsole.com/ShipConsole/login');
-    // await loginPage.login('Demo_Supplier', 'Welcome1@');
+    const portalUrl = process.env.SHIPPING_PORTAL_URL || 'https://qa.shipconsole.com/ShipConsole/login';
+    const portalUsername = process.env.PORTAL_USERNAME;
+    const portalPassword = process.env.PORTAL_PASSWORD;
 
-    await loginPage.navigate('https://sandbox.shipconsole.com/ShipConsole/login');
-    await loginPage.login('JDE_Shipper', 'Welcome1@');
-    
+    if (!portalUsername || !portalPassword) {
+      throw new Error('[Playwright Error] Missing PORTAL_USERNAME or PORTAL_PASSWORD in .env');
+    }
+
+    await loginPage.navigate(portalUrl);
+    await loginPage.login(portalUsername, portalPassword);
+
 
     // 3. Open Chatbot Widget
     await chatbot.openChatbot();

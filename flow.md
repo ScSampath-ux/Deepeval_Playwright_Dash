@@ -28,10 +28,10 @@ flowchart TD
         C1 -->|Output Raw Run Logs| D1[".deepeval/.latest_run_full.json"]
     end
 
-    subgraph Step4["Step 4: Reporting & Cloud Observability"]
+    subgraph Step4["Step 4: Local Reporting & Evaluation Dashboard"]
         D1 -->|Parse & Export Failures| E1["📑 reports/failed_evaluations.json & .md"]
         D1 -->|Generate Excel Workbook| E2["📊 reports/evaluation_results.xlsx"]
-        D1 -->|Sync Traces & Metric Scores| E3["☁️ Langfuse Cloud<br/>(us.cloud.langfuse.com)"]
+        D1 -->|Persist Run Data| E3["🖥️ Command Center Dashboard<br/>(http://127.0.0.1:5050)"]
     end
 
     style Step1 fill:#1f2937,stroke:#3b82f6,stroke-width:2px,color:#fff
@@ -99,15 +99,17 @@ flowchart TD
 
 ---
 
-### 4️⃣ Step 4: Local Reporting & Cloud Observability
+### 4️⃣ Step 4: Local Reporting & Evaluation Command Center
 
-* **Local JSON & Markdown Failure Exporter** ([report_exporter.py](file:///d:/OneDrive%20-%20Shipconsole%20Private%20Limited/Desktop/Projects/Deepeval_Playwright/deepeval-agent-demo/evals/shared/report_exporter.py)):
+* **Local JSON & Markdown Failure Exporter** ([report_exporter.py](file:///d:/OneDrive%20-%20Shipconsole%20Private%20Limited/Desktop/Deepeval_Playwright_Dash/deepeval/evals/shared/report_exporter.py)):
   * Parses `.latest_run_full.json` and extracts failed metric evaluation records.
-  * Writes structured output to `reports/failed_evaluations.json` and human-readable `reports/failed_evaluations.md`.
-* **Local Excel Workbook Exporter** ([excel_exporter.py](file:///d:/OneDrive%20-%20Shipconsole%20Private%20Limited/Desktop/Projects/Deepeval_Playwright/deepeval-agent-demo/evals/shared/excel_exporter.py)):
-  * Formats test cases, scores, and metric statuses into `reports/evaluation_results.xlsx` for stakeholder executive reporting.
-* **Langfuse Cloud Export** ([langfuse_exporter.py](file:///d:/OneDrive%20-%20Shipconsole%20Private%20Limited/Desktop/Projects/Deepeval_Playwright/deepeval-agent-demo/evals/shared/langfuse_exporter.py)):
-  * Syncs 100% of evaluation runs, prompt metadata, generated outputs, and individual metric scores to **Langfuse Cloud** (`https://us.cloud.langfuse.com`).
+  * Writes structured output to `reports/failed_evaluations.json` and human-readable `reports/failed_evaluations_report.md`.
+* **Local Excel Workbook Exporter** ([excel_exporter.py](file:///d:/OneDrive%20-%20Shipconsole%20Private%20Limited/Desktop/Deepeval_Playwright_Dash/deepeval/evals/shared/excel_exporter.py)):
+  * Formats test cases, scores, and metric statuses into `reports/evaluation_results.xlsx` with embedded charts for stakeholder reporting.
+* **Command Center Dashboard** ([server.py](file:///d:/OneDrive%20-%20Shipconsole%20Private%20Limited/Desktop/Deepeval_Playwright_Dash/deepeval/dashboard/server.py)):
+  * Persists full evaluation runs to `reports/runs/run_<timestamp>.json`.
+  * Serves the local interactive web dashboard on `http://127.0.0.1:5050` with run histories, pass rate deltas, and live SSE test execution.
+  * *100% offline & local reporting — zero cloud upload to Confident AI or Langfuse.*
 
 ---
 
@@ -115,10 +117,11 @@ flowchart TD
 
 | Pipeline Stage | npm / Shell Command | Description |
 | :--- | :--- | :--- |
-| **Complete 3-Step Pipeline** | `npm run test:e2e` | Runs Step 1 (Synthesizer) ➔ Step 2 (Playwright UI) ➔ Step 3 (DeepEval Engine + Reporting + Langfuse). |
+| **Complete 3-Step Pipeline** | `npm run test:e2e` | Runs Step 1 (Synthesizer) ➔ Step 2 (Playwright UI) ➔ Step 3 (DeepEval Engine + Local Excel & Reports). |
 | **Playwright UI + DeepEval** | `npm run test:p2e` | Skips dataset synthesizer; executes UI capture for pending prompts and runs DeepEval evaluation. |
 | **Synthesizer + Playwright UI** | `npm run test:e2p` | Runs synthesizer and UI capture without triggering the DeepEval LLM evaluation suite. |
 | **Playwright Headed UI** | `npm run test:headed` | Runs Playwright browser automation with visible browser UI for debugging DOM interactions. |
+| **Command Center Dashboard** | `npm run dashboard` | Starts the local Flask dashboard server on `http://127.0.0.1:5050`. |
 | **Direct Python Synthesizer** | `python evals/synthesize_dataset.py` | Executes Step 1 standalone to generate new prompts. |
 | **Direct Python Evaluation** | `python evals/test_agent_synthesized.py` | Executes Step 3 standalone against currently saved `actual_output` dataset items. |
 
@@ -139,15 +142,14 @@ deepeval-agent-demo/
 │       └── chatbot.spec.js               # Step 2: Playwright UI automation spec
 ├── evals/                                # DeepEval Evaluation & Dataset Suite
 │   ├── datasets/
-│   │   ├── safety_policies.txt           # Source domain policy text for dataset synthesis
+│   │   ├── policies.txt                  # Source domain policy text for dataset synthesis
 │   │   └── synthesized_safety_dataset.json # Central JSON dataset (input, expected, actual)
 │   ├── metrics/
-│   │   └── suite.py                      # 13 Domain Evaluation Metrics configuration
+│   │   └── suite.py                      # Domain Evaluation Metrics configuration
 │   ├── shared/
 │   │   ├── deepeval_bedrock.py           # AWS Bedrock LLM & Embedding custom drivers
 │   │   ├── report_exporter.py            # Local JSON/Markdown failure report exporter
-│   │   ├── excel_exporter.py             # Formatted Excel workbook result exporter
-│   │   └── langfuse_exporter.py          # Langfuse Cloud trace and metric score exporter
+│   │   └── excel_exporter.py             # Formatted Excel workbook result exporter
 │   ├── synthesize_dataset.py             # Step 1: DeepEval dataset synthesizer script
 │   └── test_agent_synthesized.py         # Step 3: DeepEval evaluation & reporting runner
 └── reports/                              # Output Reports Directory

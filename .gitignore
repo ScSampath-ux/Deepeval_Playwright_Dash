@@ -1,9 +1,27 @@
+# Dependencies & environment
+node_modules/
 .env
 .venv/
 venv/
+
+# Python caches
 __pycache__/
 *.pyc
-.deepeval*
 .pytest_cache/
+
+# DeepEval local artifacts (offline execution, zero Confident AI cloud upload)
+.deepeval*
+
+# Playwright run results & test artifacts
+test-results/
+playwright-report/
+
+# IDE settings
+.idea/
+.claude/
+.vscode/
+
+# Local evaluation reports (preserve .gitkeep)
 reports/*
 !reports/.gitkeep
+

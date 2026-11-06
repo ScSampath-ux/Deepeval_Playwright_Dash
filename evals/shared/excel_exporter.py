@@ -81,9 +81,10 @@ def export_results_to_excel(latest_run_path: str, reports_dir: str):
             cell.font = header_font
             cell.alignment = align_center
 
+        target_portal_url = os.getenv("SHIPPING_PORTAL_URL", "https://qa.shipconsole.com/ShipConsole/login")
         summary_data = [
             ("Execution Timestamp", datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "Timestamp of evaluation run"),
-            ("Target Portal URL", "https://sandbox.shipconsole.com/ShipConsole/login", "Live portal environment"),
+            ("Target Portal URL", target_portal_url, "Live portal environment"),
             ("Total Test Cases", total_cases, "Prompts processed"),
             ("Passed Test Cases", passed_cases, "Passed all 13 metrics"),
             ("Failed Test Cases", failed_cases_count, "Failed 1 or more metrics"),

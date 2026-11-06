@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 /**
  * ShipConsole Portal - Login Page Object Model (POM)
  * 
@@ -19,7 +22,7 @@ export class LoginPage {
    * Navigates to the portal login page and handles unauthorized fallback screens.
    * @param {string} url Portal base URL
    */
-  async navigate(url = 'https://sandbox.shipconsole.com/ShipConsole/login') {
+  async navigate(url = process.env.SHIPPING_PORTAL_URL || 'https://qa.shipconsole.com/ShipConsole/login') {
     console.log(`[Playwright] Navigating to ${url}...`);
     await this.page.goto(url, { waitUntil: 'domcontentloaded' });
 
@@ -34,8 +37,14 @@ export class LoginPage {
    * @param {string} username Portal username
    * @param {string} password Portal password
    */
-  
-  async login(username = 'JDE_Shipper', password = 'Welcome1@') {
+
+  async login(
+    username = process.env.PORTAL_USERNAME,
+    password = process.env.PORTAL_PASSWORD
+  ) {
+    if (!username || !password) {
+      throw new Error('[Playwright Error] Missing PORTAL_USERNAME or PORTAL_PASSWORD in .env');
+    }
     console.log(`[Playwright] Logging in as user: ${username}...`);
 
     await this.usernameInput.waitFor({ state: 'visible', timeout: 15000 });

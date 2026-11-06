@@ -1,9 +1,8 @@
 """
 ShipConsole AI Chatbot - Step 3: DeepEval Evaluation Suite & Reporting Runner
 
-This script executes the 13 production evaluation metrics against the captured Playwright UI
-chatbot outputs, generates local JSON/Markdown failure reports, and syncs all traces & scores to
-Langfuse Cloud (https://us.cloud.langfuse.com).
+This script executes the production evaluation metrics against the captured Playwright UI
+chatbot outputs, generates local JSON/Markdown failure reports, and exports a formatted Excel workbook.
 
 Pipeline Position:
   - Step 1: DeepEval Synthesizer (evals/synthesize_dataset.py)
@@ -45,7 +44,6 @@ from evals.shared.deepeval_bedrock import BedrockLLM
 from evals.metrics.suite import get_evaluation_metrics
 from evals.shared.report_exporter import export_failure_reports
 from evals.shared.excel_exporter import export_results_to_excel
-from evals.shared.langfuse_exporter import export_results_to_langfuse
 
 # Centralized Data & Report Paths
 DATASET_PATH = os.path.join(_ROOT, "evals", "datasets", "synthesized_safety_dataset.json")
@@ -75,9 +73,9 @@ def load_evaluation_test_cases():
     test_cases = []
     for item in existing_data:
         actual_out = item.get("actual_output")
-        if not actual_out:
-            print(f"[Warning] Prompt '{item.get('input')[:40]}...' missing actual_output. Run Playwright UI test first.")
-            actual_out = "No actual output recorded from UI."
+        if not actual_out or str(actual_out).strip() == "":
+            print(f"[Skip] Prompt '{item.get('input')[:40]}...' missing actual_output. Run Playwright UI test first.")
+            continue
 
         # Retrieval context fallback for contextual metrics
         retrieval_ctx = item.get("retrieval_context")
@@ -99,11 +97,11 @@ def load_evaluation_test_cases():
 
 def run_evaluation_suite():
     """
-    Executes the 13 evaluation metrics, exports failure reports, generates Excel workbook, and syncs traces to Langfuse Cloud.
+    Executes the evaluation metrics, exports failure reports, generates Excel workbook, and persists run data.
     """
     test_cases = load_evaluation_test_cases()
     if not test_cases:
-        print("\n[Warning] No test cases found in dataset. Skipping evaluation.")
+        print("\n[Warning] No test cases found with populated actual_output. Run Playwright UI test (Step 2) first.")
         return
 
     # Initialize Bedrock LLM evaluator & metrics suite
@@ -116,17 +114,6 @@ def run_evaluation_suite():
     # Export Local Reports (JSON, Markdown, and Excel Workbook)
     export_failure_reports(LATEST_RUN_PATH, REPORTS_DIR)
     export_results_to_excel(LATEST_RUN_PATH, REPORTS_DIR)
-
-    # Sync Traces & Metric Scores to Langfuse Cloud
-    trace_urls_by_input = {}
-    try:
-        run_data_obj = None
-        if os.path.exists(LATEST_RUN_PATH):
-            with open(LATEST_RUN_PATH, "r", encoding="utf-8") as f:
-                run_data_obj = json.load(f)
-        trace_urls_by_input = export_results_to_langfuse(test_cases, run_data_obj) or {}
-    except Exception as e:
-        print(f"[Langfuse Exporter] Could not sync with Langfuse Cloud: {e}")
 
     # Persist this run to reports/runs/ for the Evaluation Command Center dashboard.
     # Guarded so deleting dashboard/ never breaks core pipeline execution.
@@ -141,7 +128,6 @@ def run_evaluation_suite():
             timestamp_iso=timestamp_iso,
             model_used=bedrock_eval_llm.get_model_name(),
             dataset_source=os.path.basename(DATASET_PATH),
-            trace_urls_by_input=trace_urls_by_input,
         )
     except Exception as e:
         print(f"[Dashboard] Skipping run persistence: {e}")

@@ -166,7 +166,6 @@ def build_run_record(latest_run_path: str, run_id: str, timestamp_iso: str,
             "success": case_success,
             "duration_seconds": round(float(tc.get("runDuration")), 2) if tc.get("runDuration") is not None else None,
             "metrics": metrics,
-            "langfuse_trace_url": trace_urls_by_input.get(input_text.strip()),
         })
 
     total_cases = len(test_cases)
